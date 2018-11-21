@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/chesterchenn/colors/issues"
   },
-  "homepage": "https://github.com/chesterchenn/colors#readme"
+  "homepage": "https://github.com/chesterchenn/colors#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
