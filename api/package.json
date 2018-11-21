@@ -1,0 +1,24 @@
+{
+  "name": "colors-api",
+  "version": "1.0.0",
+  "description": "This is colors api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chesterchenn/colors.git"
+  },
+  "keywords": [
+    "color",
+    "express",
+    "node"
+  ],
+  "author": "chesterchenn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chesterchenn/colors/issues"
+  },
+  "homepage": "https://github.com/chesterchenn/colors#readme"
+}
