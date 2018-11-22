@@ -14,9 +14,11 @@ This is a express + react app.
 
 ### 启动API
 进入api目录 `cd api`  
+安装依赖 `npm install`  
 运行api项目 `npm run start`  
 
 ### 启动UI
 进入UI目录 `cd ui`  
+安装依赖 `npm install`  
 运行UI项目 `npm run start`  
 
