@@ -1,11 +1,20 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
-const port = 3000;
+const port = 3030;
 
-app.get('/', (req, res) => res.end('Hello World'));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
 
-app.route('/colors')
+app.get('/api/name', (req, res) => {
+  res.send('chesterchenn');
+  res.end();
+});
+
+app.route('/api/colors')
   .get((req, res) => {
     res.send(fs.readFileSync('../config/colors.json', 'utf8'))
     res.end();
