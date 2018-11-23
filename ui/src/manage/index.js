@@ -1,11 +1,22 @@
 import React from 'react';
-import 'whatwg-fetch';
-
+import { Switch, Route } from 'react-router-dom';
+import { routes } from './routes';
+import NoMatch from './routes/NoMatch';
 export default class Manage extends React.Component {
   render() {
     return (
       <div>
-        Hello, This is from manage.
+        <Switch>
+          {routes.map((route, i) => (
+            <Route
+                key={i}
+                exact
+                path={route.path}
+                component={route.component}
+              />
+          ))}
+          <Route component={NoMatch} />
+        </Switch>
       </div>
     )
   }
