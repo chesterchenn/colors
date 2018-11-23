@@ -1,30 +1,14 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-
+import Page from './pages';
+import Manage from './manage';
 class App extends Component {
-  state = {
-    name: ''
-  }
-
-  getName = () => {
-    return window.fetch('api/name')
-      .then(res => {
-        return res.text()
-      })
-  }
-
-  componentDidMount() {
-    this.getName().then(text => {
-      this.setState({
-        name: text 
-      })
-    });
-  }
-
   render() {
     return (
       <div>
-        Hello, This is {this.state.name}
+        Hello, This is App.
+        <Page />
+        <Manage />
       </div>
     );
   }

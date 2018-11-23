@@ -9,7 +9,8 @@ This is a express + react app.
 |--UI                # UI展示
 |  |-- public      
 |  |-- src
-|--Manage            # 后台管理
+       |-- pages     # 展示页面
+       |-- manage    # 后台管理
 ```
 
 ### 启动API
