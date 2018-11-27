@@ -3,16 +3,20 @@ import Page from '../pages';
 import Manage from '../manage';
 import NoMatch from '../manage/routes/NoMatch';
 import { Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from "../store/index";
+const store = configureStore();
+
 class App extends Component {
   render() {
     return (
-      <div>
+      <Provider store={store}>
         <Switch>
           <Route exact path='/' component={Page} />
           <Route path='/manage' component={Manage} />
           <Route component={NoMatch} />
         </Switch>
-      </div>
+      </Provider>
     );
   }
 }
