@@ -14,9 +14,27 @@ app.get('/api/name', (req, res) => {
   res.end();
 });
 
-app.route('/api/colors')
+const db = fs.readFileSync('../config/db.json', 'utf8');
+const data = JSON.parse(db);
+
+app.route('/api/db')
   .get((req, res) => {
-    res.send(fs.readFileSync('../config/colors.json', 'utf8'))
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+    res.end();
+  })
+
+app.route('/api/db/colors')
+  .get((req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data.colors);
+    res.end();
+  })
+
+app.route('/api/db/posts')
+  .get((req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data.posts);
     res.end();
   })
 

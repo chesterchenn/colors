@@ -1,0 +1,15 @@
+{
+  "colors": [
+    { "name": "Absolute Zero", "hex": "#0048BA", "cname": "绝对零度" },
+    { "name": "Acid", "hex": "#B0BF1A", "cname": "酸" },
+    { "name": "baby blue", "hex": "#89CFF0", "cname": "淡蓝色" }
+  ],
+  "posts": [
+    { "id": 1, "title": "json-server", "author": "typicode" },
+    { "id": 2, "title": "express", "author": "hahahhah" }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" }
+}

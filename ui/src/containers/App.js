@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Page from './pages';
-import Manage from './manage';
-import NoMatch from './manage/routes/NoMatch';
+import Page from '../pages';
+import Manage from '../manage';
+import NoMatch from '../manage/routes/NoMatch';
 import { Route, Switch } from 'react-router-dom';
 class App extends Component {
   render() {
