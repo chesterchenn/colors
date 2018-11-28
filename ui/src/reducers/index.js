@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
 import {
-  SELECTED,
-  REQUEST,
-  RECEIVE
+  SELECTED
 } from '../actions/index';
 
 function selectedOption(state = 'colors', action) {
@@ -14,8 +12,8 @@ function selectedOption(state = 'colors', action) {
   }
 }
 
-const rootReducer = combineReducers(
+const rootReducer = combineReducers({
   selectedOption
-)
+});
 
 export default rootReducer;

@@ -10,16 +10,16 @@ class Page extends React.Component {
   }
 
   render() {
-    const { selected } = this.props;
+    const { selectedOption } = this.props;
     return (
       <div>
         <Picker 
-          value={selected}
-          onChange={() => this.handleChange}
+          value={selectedOption}
+          onChange={(e) => this.handleChange(e)}
           options={['colors', 'posts']}
         />
         <div>
-          {selected}
+          Hello: {selectedOption}
         </div>
       </div>
     )
@@ -27,9 +27,9 @@ class Page extends React.Component {
 };
 
 function mapStateToProps(state) {
-  const { selected } = state;
+  const { selectedOption } = state;
   return {
-    selected,
+    selectedOption,
   }
 }
 
