@@ -4,7 +4,7 @@ import Manage from '../manage';
 import NoMatch from '../manage/routes/NoMatch';
 import { Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configureStore from "../store/index";
+import configureStore from "../store";
 const store = configureStore();
 
 class App extends Component {

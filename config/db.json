@@ -1,8 +1,8 @@
 {
   "colors": [
-    { "name": "Absolute Zero", "hex": "#0048BA", "cname": "绝对零度" },
-    { "name": "Acid", "hex": "#B0BF1A", "cname": "酸" },
-    { "name": "baby blue", "hex": "#89CFF0", "cname": "淡蓝色" }
+    { "id": 1, "name": "Absolute Zero", "hex": "#0048BA", "cname": "绝对零度" },
+    { "id": 2, "name": "Acid", "hex": "#B0BF1A", "cname": "酸" },
+    { "id": 3, "name": "baby blue", "hex": "#89CFF0", "cname": "淡蓝色" }
   ],
   "posts": [
     { "id": 1, "title": "json-server", "author": "typicode" },

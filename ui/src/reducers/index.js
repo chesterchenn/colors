@@ -1,19 +1,8 @@
 import { combineReducers } from 'redux';
-import {
-  SELECTED
-} from '../actions/index';
-
-function selectedOption(state = 'colors', action) {
-  switch (action.type) {
-    case SELECTED:
-      return action.option;
-    default:
-      return state;
-  }
-}
+import colorsReducer from './colors';
 
 const rootReducer = combineReducers({
-  selectedOption
+  colorsReducer
 });
 
 export default rootReducer;
