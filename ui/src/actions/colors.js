@@ -15,10 +15,10 @@ export function colorsRequest() {
   }
 }
 
-export function colorsReceive(json) {
+export function colorsReceive(colors) {
   return {
     type: COLORS_RECEIVE,
-    colors: json
+    colors
   }
 }
 
@@ -32,7 +32,7 @@ export const fetchColors = () => dispatch => {
   dispatch(colorsRequest());
   return fetch(COLORS_API)
     .then(response => {
-      return response.json()
+      return response.json();
     })
-    .then(json => dispatch(colorsReceive(json)))
+    .then(json => dispatch(colorsReceive(json)));
 }

@@ -1,30 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchColors } from '../actions/colors';
+import ColorItem from './components/colorItem';
 
 class Page extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchColors());
+    this.props.fetchColors();
   }
 
   render() {
     const { colors } = this.props
-    console.log(colors);
     return (
       <div>
-        Hello, this is from page.
+        { colors.map(color => 
+          <ColorItem key={color.name} name={color.name} hex={color.hex} cname={color.cname} />) 
+        }
       </div>
     )
   }
 };
 
-function mapStateToProps(state) {
-  const { colorsReducer } = state;
-  const { colors } = colorsReducer || [];
+const mapStateToProps = (state) => {
+  const { colors } = state.colorsReducer;
   return {
     colors
   }
 }
 
-export default connect(mapStateToProps)(Page);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchColors: () => {
+      dispatch(fetchColors())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Page);
