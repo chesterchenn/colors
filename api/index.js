@@ -9,11 +9,6 @@ app.use((req, res, next) => {
   next();
 })
 
-app.get('/api/name', (req, res) => {
-  res.send('chesterchenn');
-  res.end();
-});
-
 const db = fs.readFileSync('../config/db.json', 'utf8');
 const data = JSON.parse(db);
 
@@ -28,13 +23,6 @@ app.route('/api/db/colors')
   .get((req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(data.colors);
-    res.end();
-  })
-
-app.route('/api/db/posts')
-  .get((req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(data.posts);
     res.end();
   })
 
