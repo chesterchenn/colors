@@ -1,10 +1,9 @@
 // ===========================
-// Contants
+// Constants
 // ===========================
 const COLORS_API = '/api/db/colors';
 export const COLORS_REQUEST = 'COLORS_REQUEST';
 export const COLORS_RECEIVE = 'COLORS_RECEIVE';
-export const COLORS_FAILURE = 'COLORS_FAILURE';
 
 // ===========================
 // Action Creators
@@ -19,12 +18,6 @@ export function colorsReceive(colors) {
   return {
     type: COLORS_RECEIVE,
     colors
-  }
-}
-
-export function colorsFailure() {
-  return {
-    type: COLORS_FAILURE
   }
 }
 
