@@ -1,15 +1,7 @@
 {
   "colors": [
-    { "id": 1, "name": "Absolute Zero", "hex": "#0048BA", "cname": "绝对零度" },
-    { "id": 2, "name": "Acid", "hex": "#B0BF1A", "cname": "酸" },
-    { "id": 3, "name": "baby blue", "hex": "#89CFF0", "cname": "淡蓝色" }
-  ],
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" },
-    { "id": 2, "title": "express", "author": "hahahhah" }
-  ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+    { "id": 1, "name": "Absolute Zero", "hex": "#0048BA", "cname": "绝对零度", "fontStyle": 0 },
+    { "id": 2, "name": "Acid", "hex": "#B0BF1A", "cname": "酸", "fontStyle": 0 },
+    { "id": 3, "name": "Baby blue", "hex": "#89CFF0", "cname": "淡蓝色", "fontStyle": 0 }
+  ]
 }

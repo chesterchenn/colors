@@ -1,7 +1,7 @@
+import API from '../../config/API';
 // ===========================
 // Constants
 // ===========================
-const COLORS_API = '/api/db/colors';
 export const COLORS_REQUEST = 'COLORS_REQUEST';
 export const COLORS_RECEIVE = 'COLORS_RECEIVE';
 
@@ -23,7 +23,7 @@ export function colorsReceive(colors) {
 
 export const fetchColors = () => dispatch => {
   dispatch(colorsRequest());
-  return fetch(COLORS_API)
+  return fetch(API.colors)
     .then(response => {
       return response.json();
     })

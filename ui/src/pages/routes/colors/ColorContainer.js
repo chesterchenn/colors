@@ -13,7 +13,7 @@ class ColorContainer extends React.Component {
     return (
       <div>
         { colors.map(color => 
-          <ColorItem key={color.name} name={color.name} hex={color.hex} cname={color.cname} />) 
+          <ColorItem key={color.name} name={color.name} hex={color.hex} cname={color.cname} fontStyle={color.fontStyle} />) 
         }
       </div>
     )
