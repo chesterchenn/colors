@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchColors } from '../actions/colors';
-import ColorItem from './components/colorItem';
+import { fetchColors } from '../../../redux/actions/colors';
+import ColorItem from '../../components/colorItem';
 
-class Page extends React.Component {
+class ColorContainer extends React.Component {
   componentDidMount() {
     this.props.fetchColors();
   }
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+export default connect(mapStateToProps, mapDispatchToProps)(ColorContainer);

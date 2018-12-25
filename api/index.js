@@ -9,7 +9,7 @@ app.use((req, res, next) => {
   next();
 })
 
-const db = fs.readFileSync('../config/db.json', 'utf8');
+const db = fs.readFileSync('../mock/db.json', 'utf8');
 const data = JSON.parse(db);
 
 app.route('/api/db')

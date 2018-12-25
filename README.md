@@ -4,13 +4,16 @@ This is a express + react app.
 ## 目录结构
 ```
 . 
-|--API               # API目录
-|--config            # 颜色配置
-|--UI                # UI展示
+|--API                # API目录
+|--MOCK               # MOCK数据
+|--UI                 # UI展示
 |  |-- public      
 |  |-- src
-       |-- pages     # 展示页面
-       |-- manage    # 后台管理
+       |-- config     # 配置文件
+       |-- containers # 容器
+       |-- manage     # 后台管理
+       |-- pages      # 展示页面
+       |-- redux      # redux文件
 ```
 
 ### 启动API

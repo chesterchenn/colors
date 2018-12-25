@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { routes } from './routes';
-import NoMatch from './routes/NoMatch';
-export default class Manage extends React.Component {
+import { routes } from '../config/menuRouter';
+import NoMatch from '../pages/routes/NoMatch';
+export default class Routes extends React.Component {
   render() {
     return (
       <div>
