@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "mock": "json-server mock/db.json --routes mock/routes.json --port 3030",
+    "mock": "json-server mock/db.json -r mock/routes.json -p 3030",
     "start:mock": "npm run start | npm run mock"
   },
   "eslintConfig": {
