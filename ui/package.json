@@ -16,11 +16,17 @@
     "typeface-roboto": "0.0.54",
     "whatwg-fetch": "^3.0.0"
   },
+  "devDependencies": {
+    "json-server": "^0.14.2",
+    "redux-logger": "^3.0.6"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "mock": "json-server mock/db.json --routes mock/routes.json --port 3030",
+    "start:mock": "npm run start | npm run mock"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,8 +37,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:3030/",
-  "devDependencies": {
-    "redux-logger": "^3.0.6"
-  }
+  "proxy": "http://localhost:3030/"
 }

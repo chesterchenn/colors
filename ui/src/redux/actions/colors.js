@@ -1,4 +1,5 @@
 import API from '../../config/API';
+import { fetch } from 'whatwg-fetch';
 // ===========================
 // Constants
 // ===========================
@@ -14,18 +15,19 @@ export function colorsRequest() {
   }
 }
 
-export function colorsReceive(colors) {
+export function colorsReceive(list) {
   return {
     type: COLORS_RECEIVE,
-    colors
+    list
   }
 }
 
 export const fetchColors = () => dispatch => {
   dispatch(colorsRequest());
   return fetch(API.colors)
-    .then(response => {
-      return response.json();
-    })
-    .then(json => dispatch(colorsReceive(json)));
+    .then(response => 
+      response.json()
+    ).then(json => 
+      dispatch(colorsReceive(json))
+    );
 }

@@ -3,19 +3,19 @@ import {
 } from '../actions/colors';
 
 const initState = {
-  colors: []
+  list: []
 }
 
-const colorsReducer = (state = initState, action) => {
+const colors = (state = initState, action) => {
   switch (action.type) {
     case COLORS_RECEIVE:
       return {
         ...state,
-        colors: action.colors
+        list: action.list
       }
     default:
       return state;
   }
 }
 
-export default colorsReducer;
+export default colors;

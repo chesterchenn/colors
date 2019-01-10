@@ -2,7 +2,7 @@ import Admin from '../manage/routes/Admin';
 import Login from '../manage/routes/Login';
 import Colors from '../pages/routes/colors';
 
-export const routes = [{
+export const menu = [{
   path: '/',
   component: Colors
 }, {

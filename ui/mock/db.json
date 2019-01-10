@@ -1,0 +1,7 @@
+{
+  "colors": [
+    { "id": 1, "name": "Absolute Zero", "hex": "#0048BA", "cname": "绝对零度", "fontStyle": 0 },
+    { "id": 2, "name": "Acid", "hex": "#B0BF1A", "cname": "酸", "fontStyle": 0 },
+    { "id": 3, "name": "Baby blue", "hex": "#89CFF0", "cname": "淡蓝色", "fontStyle": 0 }
+  ]
+}
