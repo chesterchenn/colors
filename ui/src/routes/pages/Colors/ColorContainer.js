@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchColors } from '../../../redux/actions/colors';
-import ColorItem from '../../components/ColorItem';
+import ColorItem from '../../../components/colorItem';
 
 class ColorContainer extends React.Component {
   componentDidMount() {

@@ -7,13 +7,13 @@ This is a express + react app.
 |--API                # API目录
 |--MOCK               # MOCK数据
 |--UI                 # UI展示
+|  |-- mock           # MOCK数据
 |  |-- public      
 |  |-- src
        |-- config     # 配置文件
        |-- containers # 容器
-       |-- manage     # 后台管理
-       |-- pages      # 展示页面
-       |-- redux      # redux文件
+       |-- routes     # 路由页面
+       |-- redux      # REDUX文件
 ```
 
 ### 启动API
