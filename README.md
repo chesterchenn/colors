@@ -5,11 +5,11 @@ This is a express + react app.
 ```
 . 
 |--API                # API目录
-|--MOCK               # MOCK数据
-|--UI                 # UI展示
-|  |-- mock           # MOCK数据
-|  |-- public      
-|  |-- src
+|--UI                 # UI目录
+   |-- mock           # MOCK数据
+   |-- public         # 公共文件
+   |-- src 
+       |-- compoents  # 组件
        |-- config     # 配置文件
        |-- containers # 容器
        |-- routes     # 路由页面
