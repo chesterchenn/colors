@@ -1,12 +1,13 @@
 const mysql = require('mysql');
+const config = require('../config/mysql');
 
-// TODO: 使用配置文件加载
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'chen',
-//   password: '1234',
-//   database: 'colors'
-// });
+// 使用配置文件加载
+const connection = mysql.createConnection({
+  host: config.host,
+  user: config.user,
+  password: config.password,
+  database: config.database
+});
 
 connection.connect();
 
