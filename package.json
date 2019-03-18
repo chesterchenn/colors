@@ -4,8 +4,9 @@
   "description": "This is colors api",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint": "npx eslint ./",
+    "eslint:fix": "npx eslint ./ --fix",
+    "start": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "mysql": "^2.16.0"
   },
   "devDependencies": {
+    "eslint": "^5.15.2",
     "nodemon": "^1.18.6"
   }
 }

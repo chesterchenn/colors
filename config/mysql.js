@@ -9,9 +9,9 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query('SELECT * FROM colors_table', (err, rows, fields) => {
+connection.query('SELECT * FROM colors_table', (err) => {
   if (err) throw err;
   console.log('Hello');
-})
+});
 
 connection.end();
