@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3030;
 const mysql = require('mysql');
-const config = require('../config/mysql');
 const SQL = require('./sql');
 
-// 使用配置文件加载
+// 使用配置文件加载,配置不上传
+const config = require('../config/mysql');
 const connection = mysql.createConnection({
   host: config.host,
   user: config.user,
