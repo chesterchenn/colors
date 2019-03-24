@@ -9,6 +9,7 @@
     "start": "nodemon src/index"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mariadb": "^2.0.3",
     "sequelize": "^5.1.0"
