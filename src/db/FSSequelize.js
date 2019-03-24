@@ -4,15 +4,18 @@ const config = require('../../config/mysql');
 const sequelize = new Sequelize(config.database, config.user, config.password, {
   host: config.host,
   dialect: 'mariadb',
-})
+  define: {
+    timestamps: false,
+  },
+});
 
 class FontStyle extends Sequelize.Model {}
 
 FontStyle.init({
-  id: {
+  font_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: false
+    autoIncrement: true,
   },
   font_color: {
     type: Sequelize.STRING,
@@ -26,13 +29,9 @@ FontStyle.init({
     type: Sequelize.STRING,
     allowNull: false
   },
-  created_at: {
-    type: Sequelize.DATE,
-    allowNull: false
-  }
 }, {
   tableName: 'font_style',
-  sequelize
-})
+  sequelize,
+});
 
 module.exports = FontStyle;
