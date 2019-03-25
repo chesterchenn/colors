@@ -6,28 +6,26 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/', (req, res) => {
-  FontStyle.findAll({
-    attributes: ['font_id', 'font_color', 'font_name', 'font_zh_name', 'created_at']
-  }).then(rows => {
-    res.status(200).send(rows);
-  });
-});
-
-router.post('/', (req, res) => {
-  let body = req.body;
-  FontStyle.create({
-    font_color: body.fontColor,
-    font_name: body.fontName,
-    font_zh_name: body.fontZhName
-  })
-    .then(task => {
-      res.status(200).send(task);
-    })
-    .catch(error => {
-      res.status(400).json(error);
+router.route('/')
+  .get((req, res) => {
+    FontStyle.findAll().then(rows => {
+      res.status(200).send(rows);
     });
-});
+  })
+  .post((req, res) => {
+    let body = req.body;
+    FontStyle.create({
+      font_color: body.fontColor,
+      font_name: body.fontName,
+      font_zh_name: body.fontZhName
+    })
+      .then(task => {
+        res.status(200).send(task);
+      })
+      .catch(error => {
+        res.status(400).json(error);
+      });
+  });
 
 router.put('/:id', (req, res) => {
   let id = req.params.id;

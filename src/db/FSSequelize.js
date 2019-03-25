@@ -29,6 +29,9 @@ FontStyle.init({
     type: Sequelize.STRING,
     allowNull: false
   },
+  created_at: {
+    type: Sequelize.DATE,
+  }
 }, {
   tableName: 'font_style',
   sequelize,
