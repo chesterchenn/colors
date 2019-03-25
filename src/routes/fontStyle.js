@@ -1,3 +1,4 @@
+// Font-Style SQL CURD
 const express = require('express');
 const router = express.Router();
 const FontStyle = require('../db/FSSequelize');
@@ -7,11 +8,13 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/')
+  // Get list from font-style
   .get((req, res) => {
     FontStyle.findAll().then(rows => {
       res.status(200).send(rows);
     });
   })
+  // Add a item to font-style
   .post((req, res) => {
     let body = req.body;
     FontStyle.create({
@@ -27,6 +30,7 @@ router.route('/')
       });
   });
 
+// Update a item from font-style
 router.put('/:id', (req, res) => {
   let id = req.params.id;
   let body = req.body;
@@ -45,6 +49,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// Delete a item from font-style
 router.delete('/:id', (req, res) => {
   FontStyle.destroy({
     where: { font_id: req.params.id }
