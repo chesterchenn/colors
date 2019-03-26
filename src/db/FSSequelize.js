@@ -1,22 +1,13 @@
 // Font-Style Sequelize Model
 const Sequelize = require('sequelize');
-const config = require('../../config/mysql');
-
-const sequelize = new Sequelize(config.database, config.user, config.password, {
-  host: config.host,
-  dialect: 'mariadb',
-  define: {
-    timestamps: false,
-  },
-});
-
+const sequelize = require('./sequelize');
 class FontStyle extends Sequelize.Model {}
 
 FontStyle.init({
   font_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
+    autoIncrement: true
   },
   font_color: {
     type: Sequelize.STRING,

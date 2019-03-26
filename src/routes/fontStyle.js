@@ -8,13 +8,11 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/')
-  // Get list from font-style
   .get((req, res) => {
     FontStyle.findAll().then(rows => {
       res.status(200).send(rows);
     });
   })
-  // Add a item to font-style
   .post((req, res) => {
     let body = req.body;
     FontStyle.create({
