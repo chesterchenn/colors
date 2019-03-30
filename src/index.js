@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3030;
 const fontStyle = require('./routes/fontStyle');
-const category = require('./routes/Category');
+const category = require('./routes/category');
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
