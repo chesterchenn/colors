@@ -3,6 +3,7 @@ const app = express();
 const port = 3030;
 const fontStyle = require('./routes/fontStyle');
 const category = require('./routes/category');
+const colors = require('./routes/colors');
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -12,5 +13,6 @@ app.use((req, res, next) => {
 
 app.use('/fontStyle', fontStyle);
 app.use('/category', category);
+app.use('/colors', colors);
 
 app.listen(port);

@@ -1,8 +1,6 @@
 // Category Sequelize Model
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
-// import { Model, Sequelize } from 'sequelize';
-// const Model = require('sequelize/lib/model')
 class Category extends Sequelize.Model {}
 
 Category.init({

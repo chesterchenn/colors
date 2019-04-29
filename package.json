@@ -6,6 +6,7 @@
   "scripts": {
     "eslint": "npx eslint src",
     "eslint:fix": "npx eslint src --fix",
+    "start:dev": "node src/index",
     "start": "nodemon --exec babel-node -- src/index"
   },
   "dependencies": {
