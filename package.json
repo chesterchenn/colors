@@ -10,18 +10,18 @@
     "start": "nodemon --exec babel-node -- src/index"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "express": "^4.16.4",
-    "mariadb": "^2.0.3",
-    "sequelize": "^5.7.1"
+    "mariadb": "^2.0.4",
+    "sequelize": "^5.8.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.2",
-    "eslint": "^5.15.2",
-    "nodemon": "^1.18.6"
+    "@babel/preset-env": "^7.4.4",
+    "eslint": "^5.16.0",
+    "nodemon": "^1.19.0"
   },
   "keywords": [
     "color",
@@ -29,5 +29,8 @@
     "node"
   ],
   "author": "chesterchenn",
+  "repository": {
+    "url": "git@github.com:chesterchenn/colors-api.git"
+  },
   "license": "MIT"
 }
