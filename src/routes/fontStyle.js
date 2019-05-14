@@ -8,11 +8,25 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/')
+  // get font-style
   .get((req, res) => {
-    FontStyle.findAll().then(rows => {
-      res.status(200).send(rows);
+    const current = ~~req.query.current || 1;
+    const perPage = ~~req.query.perPage || 10;
+    FontStyle.findAndCountAll({
+      limit: perPage,
+      offset: (current - 1) * perPage,
+    }).then(result => {
+      res.status(200).send({
+        page: {
+          current,
+          perPage,
+          count: result.count,
+        },
+        list: result.rows
+      });
     });
   })
+  // crated a font-style
   .post((req, res) => {
     let body = req.body;
     FontStyle.create({
