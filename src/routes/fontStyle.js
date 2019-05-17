@@ -1,7 +1,7 @@
 // Font-Style SQL CURD
 const express = require('express');
 const router = express.Router();
-const FontStyle = require('../db/FSSequelize');
+const FontStyle = require('../db/fontStyleSequelize');
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());

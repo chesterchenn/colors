@@ -1,7 +1,7 @@
 // Category SQL CURD
 const express = require('express');
 const router = express.Router();
-const Category = require('../db/CaSequelize');
+const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());
