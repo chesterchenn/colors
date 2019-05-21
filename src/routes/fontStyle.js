@@ -27,18 +27,26 @@ router.route('/')
     });
   })
   // crated a font-style
-  .post((req, res) => {
-    let body = req.body;
+  .post((req, res, next) => {
+    const body = req.body;
+    const fontColor = body.fontColor;
+    if (!fontColor) {
+      const error = new Error('缺少字体颜色');
+      error.httpStatusCode = 400;
+      return next(error);
+      // throw error
+    }
     FontStyle.create({
-      font_color: body.fontColor,
+      font_color: fontColor,
       font_name: body.fontName,
       font_zh_name: body.fontZhName
     })
       .then(task => {
+        // console.log(task)
         res.status(200).send(task);
       })
       .catch(error => {
-        res.status(400).json(error);
+        console.log('catch Error from fontStyle')
       });
   });
 

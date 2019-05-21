@@ -11,6 +11,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use((err, req, res, next) => {
+//   console.log('hello')
+//   // res.sendStatus(err.httpStatusCode).json(err);
+// });
+
 app.use('/fontStyle', fontStyle);
 app.use('/category', category);
 app.use('/colors', colors);

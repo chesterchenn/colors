@@ -1,8 +1,8 @@
 // Category Sequelize Model
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
-const FontStyle = require('./FSSequelize');
-const Category = require('./CaSequelize');
+const FontStyle = require('./fontStyleSequelize');
+const Category = require('./categorySequelize');
 class Colors extends Sequelize.Model {}
 
 Colors.init({
