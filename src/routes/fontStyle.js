@@ -30,23 +30,33 @@ router.route('/')
   .post((req, res, next) => {
     const body = req.body;
     const fontColor = body.fontColor;
+    const fontName = body.fontName;
+    const fontZhName = body.fontZhName;
     if (!fontColor) {
-      const error = new Error('缺少字体颜色');
-      error.httpStatusCode = 400;
+      const error = new Error('缺少字体颜色Hex值');
+      error.code = '10000';
       return next(error);
-      // throw error
+    }
+    if (!fontName) {
+      const error = new Error('缺少字体颜色名称');
+      error.code = '10001';
+      return next(error);
+    }
+    if (!fontZhName) {
+      const error = new Error('缺少字体颜色中文名称');
+      error.code = '10002';
+      return next(error);
     }
     FontStyle.create({
       font_color: fontColor,
-      font_name: body.fontName,
-      font_zh_name: body.fontZhName
+      font_name: fontName,
+      font_zh_name: fontZhName,
     })
       .then(task => {
-        // console.log(task)
         res.status(200).send(task);
       })
       .catch(error => {
-        console.log('catch Error from fontStyle')
+        return next(error);
       });
   });
 
