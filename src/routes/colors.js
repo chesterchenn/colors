@@ -8,13 +8,36 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/')
-  .get((req, res) => {
-    Colors.findAll().then(rows => {
-      res.status(200).send(rows);
+  .get((req, res, next) => {
+    const current = ~~req.query.current || 1;
+    const perPage = ~~req.query.perPage || 10;
+    Colors.findAndCountAll({
+      limit: perPage,
+      offset: (current - 1) * perPage,
+    }).then(result => {
+      res.status(200).send({
+        code: '10200',
+        message: '查询成功',
+        page: {
+          current,
+          perPage,
+          count: result.count,
+        },
+        list: result.rows,
+      })
+    }).catch(error => {
+      error.message = '查询失败';
+      error.code = '10201';
+      return next(error);
     });
   })
-  .post((req, res) => {
-    let body = req.body;
+  .post((req, res, next) => {
+    const body = req.body;
+    if (!body.fontId) {
+      const error = new Error('字体颜色不存在');
+      error.code = '10006';
+      return next(error);
+    }
     Colors.create({
       color_hex: body.colorHex,
       color_name: body.colorName,
@@ -24,10 +47,16 @@ router.route('/')
       cate_id: body.cateId,
     })
       .then(task => {
-        res.status(200).send(task);
+        res.status(200).send({
+          code: '10202',
+          message: '新增成功',
+          list: [task],
+        });
       })
       .catch(error => {
-        res.status(400).json(error);
+        // error.message = '新增失败';
+        error.code = '10203';
+        return next(error);
       });
   });
 
