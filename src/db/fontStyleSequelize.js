@@ -23,6 +23,7 @@ FontStyle.init({
   },
   created_at: {
     type: Sequelize.DATE,
+    defaultValue: new Date(),
   }
 }, {
   tableName: 'font_style',

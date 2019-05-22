@@ -18,7 +18,8 @@ Category.init({
     allowNull: false
   },
   created_at: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    defaultValue: new Date(),
   }
 }, {
   tableName: 'category',

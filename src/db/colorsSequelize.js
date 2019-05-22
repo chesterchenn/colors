@@ -45,7 +45,8 @@ Colors.init({
     }
   },
   created_at: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    defaultValue: new Date(),
   }
 }, {
   tableName: 'colors',
