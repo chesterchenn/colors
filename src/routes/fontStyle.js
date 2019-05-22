@@ -41,17 +41,17 @@ router.route('/')
 
     // error handle
     if (!fontColor) {
-      const error = new Error('缺少字体颜色Hex值');
+      const error = new Error('缺少Hex值');
       error.code = '10004';
       return next(error);
     }
     if (!fontName) {
-      const error = new Error('缺少字体颜色名称');
+      const error = new Error('缺少名称');
       error.code = '10005';
       return next(error);
     }
     if (!fontZhName) {
-      const error = new Error('缺少字体颜色中文名称');
+      const error = new Error('缺少中文名称');
       error.code = '10006';
       return next(error);
     }
@@ -61,7 +61,6 @@ router.route('/')
       font_zh_name: fontZhName,
     })
       .then(task => {
-        console.log(task);
         res.status(200).send({
           code: '10002',
           message: '新增成功',
@@ -92,17 +91,17 @@ router.put('/:id', (req, res, next) => {
       return next(error);
     } else {
       if (!fontColor) {
-        const error = new Error('缺少字体颜色Hex值');
+        const error = new Error('缺少Hex值');
         error.code = '10004';
         return next(error);
       }
       if (!fontName) {
-        const error = new Error('缺少字体颜色名称');
+        const error = new Error('缺少名称');
         error.code = '10005';
         return next(error);
       }
       if (!fontZhName) {
-        const error = new Error('缺少字体颜色中文名称');
+        const error = new Error('缺少中文名称');
         error.code = '10006';
         return next(error);
       }
@@ -114,13 +113,13 @@ router.put('/:id', (req, res, next) => {
          where: { font_id: id }
       })
         .then(FontStyle.findByPk(id)
-        .then((updateItem ) => {
-          res.status(200).send({
-            code: '10007',
-            message: '更新成功',
-            list: [updateItem],
-          });
-        }))
+          .then((updateItem ) => {
+            res.status(200).send({
+              code: '10007',
+              message: '更新成功',
+              list: [updateItem],
+            });
+          }))
         .catch(error => {
           error.message = '更新失败';
           error.code = '10008';
