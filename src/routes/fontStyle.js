@@ -38,6 +38,8 @@ router.route('/')
     const fontColor = body.fontColor;
     const fontName = body.fontName;
     const fontZhName = body.fontZhName;
+
+    // error handle
     if (!fontColor) {
       const error = new Error('缺少字体颜色Hex值');
       error.code = '10004';
@@ -74,36 +76,86 @@ router.route('/')
   });
 
 // Update a item from font-style
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const id = req.params.id;
   const body = req.body;
+  const fontColor = body.fontColor;
+  const fontName = body.fontName;
+  const fontZhName = body.fontZhName;
 
-  FontStyle.update({
-    font_color: body.fontColor,
-    font_name: body.fontName,
-    font_zh_name: body.fontZhName,
-  }, {
-    returning: true, where: { font_id: id }
+  // error handle
+  FontStyle.findByPk(id).then(result => {
+    // if id isn't exit, return
+    if (result === null) {
+      const error = new Error('ID不存在');
+      error.code = '10009';
+      return next(error);
+    } else {
+      if (!fontColor) {
+        const error = new Error('缺少字体颜色Hex值');
+        error.code = '10004';
+        return next(error);
+      }
+      if (!fontName) {
+        const error = new Error('缺少字体颜色名称');
+        error.code = '10005';
+        return next(error);
+      }
+      if (!fontZhName) {
+        const error = new Error('缺少字体颜色中文名称');
+        error.code = '10006';
+        return next(error);
+      }
+      FontStyle.update({
+        font_color: fontColor,
+        font_name: fontName,
+        font_zh_name: fontZhName,
+      }, {
+         where: { font_id: id }
+      })
+        .then(FontStyle.findByPk(id)
+        .then((updateItem ) => {
+          res.status(200).send({
+            code: '10007',
+            message: '更新成功',
+            list: [updateItem],
+          });
+        }))
+        .catch(error => {
+          error.message = '更新失败';
+          error.code = '10008';
+          return next(error);
+        });
+    }
   })
-    .then((rowsUpdate) => {
-      res.status(200).send(rowsUpdate);
-    })
-    .catch(error => {
-      res.status(400).json(error);
-    });
+  .catch(error => next(error))
 });
 
 // Delete a item from font-style
-router.delete('/:id', (req, res) => {
-  FontStyle.destroy({
-    where: { font_id: req.params.id }
-  })
-    .then((rowsDeleted) => {
-      res.status(200).send(rowsDeleted);
-    })
-    .catch(error => {
-      res.status(400).json(error);
-    });
+router.delete('/:id', (req, res, next) => {
+  FontStyle.findByPk(req.params.id).then(result => {
+    // if id isn't exit, return
+    if (!result) {
+      const error = new Error('ID不存在');
+      error.code = '10009';
+      return next(error);
+    } else {
+      FontStyle.destroy({
+        where: { font_id: req.params.id }
+      })
+        .then(() => {
+          res.status(200).send({
+            message: '删除成功',
+            code: '10010',
+          });
+        })
+        .catch(error => {
+          error.message = '删除失败',
+          error.code = '10011';
+          return next(error);
+        });
+    }
+  }).catch(error => next(error))
 });
 
 module.exports = router;
