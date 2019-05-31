@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const Colors = require('../db/colorsSequelize');
+const FontStyle = require('../db/fontStyleSequelize');
+const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());
@@ -24,7 +26,7 @@ router.route('/')
           count: result.count,
         },
         list: result.rows,
-      })
+      });
     }).catch(error => {
       error.message = '查询失败';
       error.code = '10201';
@@ -33,31 +35,39 @@ router.route('/')
   })
   .post((req, res, next) => {
     const body = req.body;
-    if (!body.fontId) {
-      const error = new Error('字体颜色不存在');
-      error.code = '10006';
-      return next(error);
-    }
-    Colors.create({
-      color_hex: body.colorHex,
-      color_name: body.colorName,
-      color_order: body.colorOrder,
-      font_id: body.fontId,
-      color_zh_name: body.colorZhName,
-      cate_id: body.cateId,
-    })
-      .then(task => {
-        res.status(200).send({
-          code: '10202',
-          message: '新增成功',
-          list: [task],
-        });
-      })
-      .catch(error => {
-        // error.message = '新增失败';
-        error.code = '10203';
+    FontStyle.findByPk(body.fontId).then(fontstyleResult => {
+      if (!fontstyleResult) {
+        const error = new Error('字体颜色不存在');
+        error.code = '10204';
         return next(error);
+      }
+      Category.findByPk(body.cateId).then(cateResult => {
+        if (!cateResult) {
+          const error = new Error('分类不存在');
+          error.code = '10205';
+          return next(error);
+        }
+        Colors.create({
+          color_hex: body.colorHex,
+          color_name: body.colorName,
+          color_order: body.colorOrder,
+          font_id: body.fontId,
+          color_zh_name: body.colorZhName,
+          cate_id: body.cateId,
+        })
+          .then(task => {
+            res.status(200).send({
+              code: '10202',
+              message: '新增成功',
+              list: [task],
+            });
+          })
+          .catch(error => {
+            console.log(error);
+            return next(error);
+          });
       });
+    });
   });
 
 router.route('/:id')
@@ -91,6 +101,6 @@ router.route('/:id')
       .catch(error => {
         res.status(400).json(error);
       });
-  })
+  });
 
 module.exports = router;

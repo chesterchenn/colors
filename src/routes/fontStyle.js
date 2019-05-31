@@ -25,7 +25,7 @@ router.route('/')
           count: result.count,
         },
         list: result.rows,
-      })
+      });
     }).catch(error => {
       error.message = '查询失败';
       error.code = '10001';
@@ -110,7 +110,7 @@ router.put('/:id', (req, res, next) => {
         font_name: fontName,
         font_zh_name: fontZhName,
       }, {
-         where: { font_id: id }
+        where: { font_id: id }
       })
         .then(FontStyle.findByPk(id)
           .then((updateItem ) => {
@@ -127,7 +127,7 @@ router.put('/:id', (req, res, next) => {
         });
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error));
 });
 
 // Delete a item from font-style
@@ -154,7 +154,7 @@ router.delete('/:id', (req, res, next) => {
           return next(error);
         });
     }
-  }).catch(error => next(error))
+  }).catch(error => next(error));
 });
 
 module.exports = router;

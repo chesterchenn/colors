@@ -26,7 +26,7 @@ router.route('/')
           count: result.count,
         },
         list: result.rows,
-      })
+      });
     }).catch(error => {
       error.message = '查询失败';
       error.code = '10101';
@@ -107,7 +107,7 @@ router.route('/:id')
           });
       }
     })
-    .catch(error => next(error));
+      .catch(error => next(error));
   })
   // Delete a category
   .delete((req, res, next) => {
@@ -134,6 +134,6 @@ router.route('/:id')
           });
       }
     }).catch(error => next(error));
-  })
+  });
 
 module.exports = router;

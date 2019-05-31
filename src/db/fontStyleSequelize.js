@@ -1,6 +1,7 @@
 // Font-Style Sequelize Model
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
+const Colors = require('./colorsSequelize');
 class FontStyle extends Sequelize.Model {}
 
 FontStyle.init({
@@ -29,5 +30,7 @@ FontStyle.init({
   tableName: 'font_style',
   sequelize,
 });
+
+FontStyle.hasMany(Colors, { foreignKey: 'font_id', constraints: false, });
 
 module.exports = FontStyle;
