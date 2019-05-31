@@ -12,19 +12,22 @@ Colors.init({
   color_hex: {
     type: Sequelize.STRING,
     allowNull: false,
-    validate: {
-      isUnique(value, next) {
-        Colors.findOne({
-          where: { color_hex: value },
-          // attributes: ['id']
-        }).done((instance) => {
-          if (instance) {
-            next(new Error('颜色Hex已经存在'))
-          }
-          next();
-        });
-      }
-    }
+    unique: {
+      msg: 'Hello from unique',
+    },
+    // validate: {
+    //   isUnique(value, next) {
+    //     Colors.findOne({
+    //       where: { color_hex: value },
+    //       // attributes: ['id']
+    //     }).done((instance) => {
+    //       if (instance) {
+    //         next(new Error('颜色Hex已经存在'))
+    //       }
+    //       next();
+    //     });
+    //   }
+    // }
   },
   color_name: {
     type: Sequelize.STRING,

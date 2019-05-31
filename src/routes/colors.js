@@ -63,7 +63,6 @@ router.route('/')
             });
           })
           .catch(error => {
-            error.code = '10206';
             return next(error);
           });
       });
@@ -71,25 +70,50 @@ router.route('/')
   });
 
 router.route('/:id')
-  .put((req, res) => {
-    let id = req.params.id;
-    let body = req.body;
-    Colors.update({
-      color_hex: body.colorHex,
-      color_name: body.colorName,
-      color_order: body.colorOrder,
-      font_id: body.fontId,
-      color_zh_name: body.colorZhName,
-      cate_id: body.cateId,
-    }, {
-      returning: true, where: { color_id: id }
-    })
-      .then(task => {
-        res.status(200).send(task);
+  .put((req, res, next) => {
+    const id = req.params.id;
+    const body = req.body;
+    Colors.findByPk(id).then(result => {
+      if (!result) {
+        const error = new Error('ID不存在');
+        error.code = '10209';
+        return next(error);
+      }
+      FontStyle.findByPk(body.fontId).then(fontstyleResult => {
+        if (!fontstyleResult) {
+          const error = new Error('字体颜色不存在');
+          error.code = '10204';
+          return next(error);
+        }
+        Category.findByPk(body.cateId).then(cateResult => {
+          if (!cateResult) {
+            const error = new Error('分类不存在');
+            error.code = '10205';
+            return next(error);
+          }
+          Colors.update({
+            color_hex: body.colorHex,
+            color_name: body.colorName,
+            color_order: body.colorOrder,
+            font_id: body.fontId,
+            color_zh_name: body.colorZhName,
+            cate_id: body.cateId,
+          }, {
+            returning: true, where: { color_id: id }
+          })
+            .then(task => {
+              res.status(200).send({
+                code: '10207',
+                message: '更新成功',
+                list: [task],
+              });
+            })
+            .catch(error => {
+              return next(error);
+            });
+        })
       })
-      .catch(error => {
-        res.status(400).json(error);
-      });
+    })
   })
   .delete((req, res) => {
     Colors.destroy({
