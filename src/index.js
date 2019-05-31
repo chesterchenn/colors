@@ -25,8 +25,9 @@ app.use((err, req, res, next) => {
 });
 
 // Error Handle
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(400).json({ message: err.message, code: err.code });
+  next();
 });
 
 app.listen(port);

@@ -63,7 +63,7 @@ router.route('/')
             });
           })
           .catch(error => {
-            console.log(error);
+            error.code = '10206';
             return next(error);
           });
       });

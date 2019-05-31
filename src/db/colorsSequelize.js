@@ -8,7 +8,6 @@ Colors.init({
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    unique: true,
   },
   color_hex: {
     type: Sequelize.STRING,
@@ -20,7 +19,7 @@ Colors.init({
           // attributes: ['id']
         }).done((instance) => {
           if (instance) {
-            return next('颜色Hex已经存在');
+            next(new Error('颜色Hex已经存在'))
           }
           next();
         });
