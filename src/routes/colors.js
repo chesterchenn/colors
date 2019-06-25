@@ -2,7 +2,6 @@
 const express = require('express');
 const router = express.Router();
 const Colors = require('../db/colorsSequelize');
-const FontStyle = require('../db/fontStyleSequelize');
 const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
 
@@ -35,37 +34,29 @@ router.route('/')
   })
   .post((req, res, next) => {
     const body = req.body;
-    FontStyle.findByPk(body.fontId).then(fontstyleResult => {
-      if (!fontstyleResult) {
-        const error = new Error('字体颜色不存在');
-        error.code = '10204';
+    Category.findByPk(body.id).then(cateResult => {
+      if (!cateResult) {
+        const error = new Error('分类不存在');
+        error.code = '10205';
         return next(error);
       }
-      Category.findByPk(body.cateId).then(cateResult => {
-        if (!cateResult) {
-          const error = new Error('分类不存在');
-          error.code = '10205';
-          return next(error);
-        }
-        Colors.create({
-          color_hex: body.colorHex,
-          color_name: body.colorName,
-          color_order: body.colorOrder,
-          font_id: body.fontId,
-          color_zh_name: body.colorZhName,
-          cate_id: body.cateId,
-        })
-          .then(task => {
-            res.status(200).send({
-              code: '10202',
-              message: '新增成功',
-              list: [task],
-            });
-          })
-          .catch(error => {
-            return next(error);
+      Colors.create({
+        hex: body.hex,
+        name: body.name,
+        font_id: body.fontId,
+        c_name: body.cname,
+        category_id: body.categoryId,
+      })
+        .then(task => {
+          res.status(200).send({
+            code: '10202',
+            message: '新增成功',
+            list: [task],
           });
-      });
+        })
+        .catch(error => {
+          return next(error);
+        });
     });
   });
 
@@ -79,45 +70,38 @@ router.route('/:id')
         error.code = '10209';
         return next(error);
       }
-      FontStyle.findByPk(body.fontId).then(fontstyleResult => {
-        if (!fontstyleResult) {
-          const error = new Error('字体颜色不存在');
-          error.code = '10204';
+
+      Category.findByPk(body.categoryId).then(cateResult => {
+        if (!cateResult) {
+          const error = new Error('分类不存在');
+          error.code = '10205';
           return next(error);
         }
-        Category.findByPk(body.cateId).then(cateResult => {
-          if (!cateResult) {
-            const error = new Error('分类不存在');
-            error.code = '10205';
-            return next(error);
-          }
-          Colors.update({
-            color_hex: body.colorHex,
-            color_name: body.colorName,
-            color_order: body.colorOrder,
-            font_id: body.fontId,
-            color_zh_name: body.colorZhName,
-            cate_id: body.cateId,
-          }, {
-            returning: true, where: { color_id: id }
-          })
-            .then(task => {
-              res.status(200).send({
-                code: '10207',
-                message: '更新成功',
-                list: [task],
-              });
-            })
-            .catch(error => {
-              return next(error);
-            });
+        Colors.update({
+          hex: body.hex,
+          name: body.name,
+          font_id: body.fontId,
+          c_name: body.cname,
+          category_id: body.categoryId,
+        }, {
+          returning: true, where: { id: id }
         })
-      })
-    })
+          .then(task => {
+            res.status(200).send({
+              code: '10207',
+              message: '更新成功',
+              list: [task],
+            });
+          })
+          .catch(error => {
+            return next(error);
+          });
+      });
+    });
   })
   .delete((req, res) => {
     Colors.destroy({
-      where: { color_id: req.params.id }
+      where: { id: req.params.id }
     })
       .then((rowsDeleted) => {
         res.status(200).send(rowsDeleted);

@@ -4,40 +4,20 @@ const sequelize = require('./sequelize');
 class Colors extends Sequelize.Model {}
 
 Colors.init({
-  color_id: {
+  id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  color_hex: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: {
-      msg: 'Hello from unique',
-    },
-    // validate: {
-    //   isUnique(value, next) {
-    //     Colors.findOne({
-    //       where: { color_hex: value },
-    //       // attributes: ['id']
-    //     }).done((instance) => {
-    //       if (instance) {
-    //         next(new Error('颜色Hex已经存在'))
-    //       }
-    //       next();
-    //     });
-    //   }
-    // }
-  },
-  color_name: {
+  hex: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  color_order: {
+  name: {
     type: Sequelize.STRING,
-    defaultValue: 999,
+    allowNull: false,
   },
-  color_zh_name: {
+  c_name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -48,7 +28,7 @@ Colors.init({
 }, {
   indexes: [{
     unique: true,
-    fields: ['color_hex']
+    fields: ['hex']
   }],
   tableName: 'colors',
   sequelize,

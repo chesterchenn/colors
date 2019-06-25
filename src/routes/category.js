@@ -37,19 +37,19 @@ router.route('/')
   // Add a category
   .post((req, res, next) => {
     const body = req.body;
-    if (!body.cateName) {
+    if (!body.name) {
       const error = new Error('缺少名称');
       error.code = '10104';
       return next(error);
     }
-    if (!body.cateZhName) {
+    if (!body.cname) {
       const error = new Error('缺少中文名称');
       error.code = '10105';
       return next(error);
     }
     Category.create({
-      cate_name: body.cateName,
-      cate_zh_name: body.cateZhName,
+      name: body.name,
+      c_name: body.cname,
     })
       .then(task => {
         res.status(200).send({
@@ -76,21 +76,21 @@ router.route('/:id')
         return next(error);
       } else {
         const body = req.body;
-        if (!body.cateName) {
+        if (!body.name) {
           const error = new Error('缺少名称');
           error.code = '10104';
           return next(error);
         }
-        if (!body.cateZhName) {
+        if (!body.cname) {
           const error = new Error('缺少中文名称');
           error.code = '10105';
           return next(error);
         }
         Category.update({
-          cate_name: body.cateName,
-          cate_zh_name: body.cateZhName,
+          name: body.name,
+          c_name: body.cname,
         }, {
-          where: { cate_id: id }
+          where: { id: id }
         })
           .then(Category.findByPk(id)
             .then(task => {
@@ -119,7 +119,7 @@ router.route('/:id')
         return next(error);
       } else {
         Category.destroy({
-          where: { cate_id: id }
+          where: { id: id }
         })
           .then(() => {
             res.status(200).send({

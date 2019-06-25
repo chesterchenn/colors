@@ -5,16 +5,16 @@ const Colors = require('./colorsSequelize');
 class Category extends Sequelize.Model {}
 
 Category.init({
-  cate_id: {
+  id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  cate_name: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  cate_zh_name: {
+  c_name: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -27,6 +27,6 @@ Category.init({
   sequelize
 });
 
-Category.hasMany(Colors, { foreignKey: 'cate_id', constraints: false, });
+Category.hasMany(Colors, { foreignKey: 'id', constraints: false, });
 
 module.exports = Category;
