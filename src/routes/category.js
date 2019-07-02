@@ -101,8 +101,6 @@ router.route('/:id')
               });
             }))
           .catch(error => {
-            error.message = '更新失败';
-            error.code = '10107';
             return next(error);
           });
       }
@@ -128,8 +126,7 @@ router.route('/:id')
             });
           })
           .catch(error => {
-            error.message = '删除失败';
-            error.code = '10110';
+            console.log(error);
             return next(error);
           });
       }

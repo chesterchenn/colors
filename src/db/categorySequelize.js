@@ -1,7 +1,6 @@
 // Category Sequelize Model
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
-const Colors = require('./colorsSequelize');
 class Category extends Sequelize.Model {}
 
 Category.init({
@@ -24,9 +23,7 @@ Category.init({
   }
 }, {
   tableName: 'category',
-  sequelize
+  sequelize,
 });
-
-Category.hasMany(Colors, { foreignKey: 'id', constraints: false, });
 
 module.exports = Category;

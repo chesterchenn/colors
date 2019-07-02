@@ -1,6 +1,7 @@
-// Category Sequelize Model
+// Colors Sequelize Model
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
+const Category = require('./categorySequelize');
 class Colors extends Sequelize.Model {}
 
 Colors.init({
@@ -20,6 +21,13 @@ Colors.init({
   c_name: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  category_id: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Category,
+      key: 'id',
+    }
   },
   created_at: {
     type: Sequelize.DATE,

@@ -27,14 +27,13 @@ router.route('/')
         list: result.rows,
       });
     }).catch(error => {
-      error.message = '查询失败';
       error.code = '10201';
       return next(error);
     });
   })
   .post((req, res, next) => {
     const body = req.body;
-    Category.findByPk(body.id).then(cateResult => {
+    Category.findByPk(body.categoryId).then(cateResult => {
       if (!cateResult) {
         const error = new Error('分类不存在');
         error.code = '10205';
