@@ -1,2 +1,2 @@
-[![Dependencies](https://david-dm.org/chesterchenn/colors-api.svg)](https://david-dm.org/chesterchenn/colors-api)  
+[![dependencies Status](https://david-dm.org/chesterchenn/colors-api/status.svg)](https://david-dm.org/chesterchenn/colors-api)  
 This project was used with [Express](https://expressjs.com/).
