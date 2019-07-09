@@ -50,7 +50,10 @@ router.route('/')
           res.status(200).send({
             code: '10202',
             message: '新增成功',
-            list: [task],
+            list: [{
+              ...task,
+              cname: task.c_name
+            }],
           });
         })
         .catch(error => {
