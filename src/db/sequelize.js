@@ -10,6 +10,7 @@ const sequelize = new Sequelize(config.database, config.user, config.password, {
   define: {
     timestamps: false,
   },
+  logging: false,
 });
 
 module.exports = sequelize;

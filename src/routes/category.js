@@ -99,12 +99,17 @@ router.route('/:id')
           where: { id: id }
         })
           .then(Category.findByPk(id)
-            .then(task => {
-              res.status(200).send({
-                code: '10106',
-                message: '更新成功',
-                list: [task],
-              });
+            .then(oldTask => {
+              oldTask.reload().then(task => {
+                const plainTask = task.get({
+                  plain: true
+                });
+                res.status(200).send({
+                  code: '10106',
+                  message: '更新成功',
+                  list: [{...plainTask}],
+                });
+              })
             }))
           .catch(error => {
             return next(error);
