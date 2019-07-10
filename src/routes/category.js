@@ -49,16 +49,22 @@ router.route('/')
     }
     Category.create({
       name: body.name,
-      c_name: body.cname,
+      cname: body.cname,
     })
       .then(task => {
+        const result = task.get({
+          plain: true
+        });
         res.status(200).send({
           code: '10102',
           message: '新增成功',
-          list: [task],
+          list: [{
+            ...result
+          }],
         });
       })
       .catch(error => {
+        console.log(error);
         error.message = '新增失败';
         error.code = '10103';
         return next(error);
@@ -88,7 +94,7 @@ router.route('/:id')
         }
         Category.update({
           name: body.name,
-          c_name: body.cname,
+          cname: body.cname,
         }, {
           where: { id: id }
         })

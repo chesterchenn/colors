@@ -24,7 +24,7 @@ describe('Category API test case: ', function() {
         .end(function(err, res) {
           if (err) return done(err);
           expect(res.body.list[0].name).to.equal('Test');
-          expect(res.body.list[0].c_name).to.equal('测试');
+          expect(res.body.list[0].cname).to.equal('测试');
           done();
         });
     });

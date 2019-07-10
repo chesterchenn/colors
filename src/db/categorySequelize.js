@@ -13,13 +13,15 @@ Category.init({
     type: Sequelize.STRING,
     allowNull: false
   },
-  c_name: {
+  cname: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    field: 'c_name'
   },
-  created_at: {
+  createdAt: {
     type: Sequelize.DATE,
     defaultValue: new Date(),
+    field: 'created_at',
   }
 }, {
   tableName: 'category',

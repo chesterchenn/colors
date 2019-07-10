@@ -18,20 +18,23 @@ Colors.init({
     type: Sequelize.STRING,
     allowNull: false,
   },
-  c_name: {
+  cname: {
     type: Sequelize.STRING,
     allowNull: false,
+    field: 'c_name',
   },
-  category_id: {
+  categoryId: {
     type: Sequelize.INTEGER,
     references: {
       model: Category,
       key: 'id',
-    }
+    },
+    field: 'category_id'
   },
-  created_at: {
+  createdAt: {
     type: Sequelize.DATE,
     defaultValue: new Date(),
+    field: 'created_at'
   }
 }, {
   indexes: [{

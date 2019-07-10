@@ -43,16 +43,15 @@ router.route('/')
         hex: body.hex,
         name: body.name,
         font_id: body.fontId,
-        c_name: body.cname,
-        category_id: body.categoryId,
+        cname: body.cname,
+        categoryId: body.categoryId,
       })
         .then(task => {
           res.status(200).send({
             code: '10202',
             message: '新增成功',
             list: [{
-              ...task,
-              cname: task.c_name
+              ...task
             }],
           });
         })
@@ -83,8 +82,8 @@ router.route('/:id')
           hex: body.hex,
           name: body.name,
           font_id: body.fontId,
-          c_name: body.cname,
-          category_id: body.categoryId,
+          cname: body.cname,
+          categoryId: body.categoryId,
         }, {
           returning: true, where: { id: id }
         })
