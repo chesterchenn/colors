@@ -19,8 +19,8 @@ router.route('/')
       offset: (current - 1) * perPage,
     }).then(result => {
       res.status(200).send({
-        code: MESSAGE.CATEGORY_READ_SUCEESS_CODE,
-        message: MESSAGE.CATEGORY_READ_SUCEESS_MESSAGE,
+        code: MESSAGE.CATEGORY_READ_SUCCESS_CODE,
+        message: MESSAGE.CATEGORY_READ_SUCCESS_MESSAGE,
         page: {
           current,
           perPage,
@@ -29,8 +29,9 @@ router.route('/')
         list: result.rows,
       });
     }).catch(error => {
-      error.message = '查询失败';
-      error.code = '10101';
+      console.log(error);
+      error.code = MESSAGE.CATEGORY_READ_FAILURE_CODE;
+      error.message = MESSAGE.CATEGORY_READ_FAILURE_CODE;
       return next(error);
     });
   })
@@ -39,13 +40,13 @@ router.route('/')
   .post((req, res, next) => {
     const body = req.body;
     if (!body.name) {
-      const error = new Error('缺少名称');
-      error.code = '10104';
+      const error = new Error(MESSAGE.CATEGORY_ADD_NAME_MESSAGE);
+      error.code = MESSAGE.CATEGORY_ADD_NAME_CODE;
       return next(error);
     }
     if (!body.cname) {
-      const error = new Error('缺少中文名称');
-      error.code = '10105';
+      const error = new Error(MESSAGE.CATEGORY_ADD_CNAME_MESSAGE);
+      error.code = MESSAGE.CATEGORY_ADD_CNAME_CODE;
       return next(error);
     }
     Category.create({
@@ -57,8 +58,8 @@ router.route('/')
           plain: true
         });
         res.status(200).send({
-          code: '10102',
-          message: '新增成功',
+          code: MESSAGE.CATEGORY_ADD_SUCCESS_CODE,
+          message: MESSAGE.CATEGORY_ADD_SUCCESS_MESSAGE,
           list: [{
             ...result
           }],
@@ -66,8 +67,8 @@ router.route('/')
       })
       .catch(error => {
         console.log(error);
-        error.message = '新增失败';
-        error.code = '10103';
+        error.code = MESSAGE.CATEGORY_ADD_FAILURE_CODE;
+        error.message = MESSAGE.CATEGORY_ADD_FAILURE_MESSAGE;
         return next(error);
       });
   });
@@ -78,19 +79,19 @@ router.route('/:id')
     const id = req.params.id;
     Category.findByPk(id).then(result => {
       if (!result) {
-        const error = new Error('ID不存在');
-        error.code = '10108';
+        const error = new Error(MESSAGE.CATEGORY_UPDATE_ID_MESSAGE);
+        error.code = MESSAGE.CATEGORY_UPDATE_ID_CODE;
         return next(error);
       } else {
         const body = req.body;
         if (!body.name) {
-          const error = new Error('缺少名称');
-          error.code = '10104';
+          const error = new Error(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
+          error.code = MESSAGE.CATEGORY_UPDATE_NAME_CODE;
           return next(error);
         }
         if (!body.cname) {
-          const error = new Error('缺少中文名称');
-          error.code = '10105';
+          const error = new Error(MESSAGE.CATEGORY_UPDATE_CNAME_MESSAGE);
+          error.code = MESSAGE.CATEGORY_UPDATE_CNAME_CODE;
           return next(error);
         }
         Category.update({
@@ -106,13 +107,16 @@ router.route('/:id')
                   plain: true
                 });
                 res.status(200).send({
-                  code: '10106',
-                  message: '更新成功',
+                  code: MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE,
+                  message: MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE,
                   list: [{...plainTask}],
                 });
               })
             }))
           .catch(error => {
+            console.log(error);
+            error.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
+            error.message = MESSAGE.CATEGORY_UPDATE_FAILURE_MESSAGE;
             return next(error);
           });
       }
