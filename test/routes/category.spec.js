@@ -12,7 +12,11 @@ describe('Category API test case: ', function() {
         .get('/category')
         .expect('Content-Type', /json/)
         .expect(200)
-        .end(done);
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.body.code).eq('10100');
+          expect(res.body.message).eq('查询成功');
+        });
     });
   });
 
@@ -38,7 +42,7 @@ describe('Category API test case: ', function() {
   });
 
   describe('Put Category', function() {
-    it(`should update the category where id = ${instanceId}`, function(done) {
+    it(`should update the category`, function(done) {
       request(app)
         .put('/category/' + instanceId)
         .send({
@@ -56,4 +60,19 @@ describe('Category API test case: ', function() {
         });
     });
   });
+
+  describe('Remove Category', function() {
+    it('should delete the category', function(done) {
+      request(app)
+        .delete('/category/' + instanceId)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.body.message).to.eq('删除成功');
+          expect(res.body.code).to.eq('10109');
+          done();
+        })
+    })
+  })
 });
