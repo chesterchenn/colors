@@ -16,6 +16,7 @@ describe('Category API test case: ', function() {
           if (err) return done(err);
           expect(res.body.code).eq('10100');
           expect(res.body.message).eq('查询成功');
+          done();
         });
     });
   });
