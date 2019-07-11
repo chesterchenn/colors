@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
+const MESSAGE = require('../../MESSAGE.json');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -18,8 +19,8 @@ router.route('/')
       offset: (current - 1) * perPage,
     }).then(result => {
       res.status(200).send({
-        code: '10100',
-        message: '查询成功',
+        code: MESSAGE.CATEGORY_READ_SUCEESS_CODE,
+        message: MESSAGE.CATEGORY_READ_SUCEESS_MESSAGE,
         page: {
           current,
           perPage,
