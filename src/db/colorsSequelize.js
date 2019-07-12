@@ -13,6 +13,10 @@ Colors.init({
   hex: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: {
+      args:true,
+      msg: 'Hello from hex.'
+    },
   },
   name: {
     type: Sequelize.STRING,
@@ -22,6 +26,11 @@ Colors.init({
     type: Sequelize.STRING,
     allowNull: false,
     field: 'c_name',
+  },
+  fontColor: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 1,
+    field: 'font_color',
   },
   categoryId: {
     type: Sequelize.INTEGER,

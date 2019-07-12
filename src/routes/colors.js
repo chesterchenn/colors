@@ -16,20 +16,21 @@ router.route('/')
     Colors.findAndCountAll({
       limit: perPage,
       offset: (current - 1) * perPage,
-    }).then(result => {
+      raw: true
+    }).then(task => {
       res.status(200).send({
         code: MESSAGE.COLORS_READ_SUCCESS_CODE,
         message: MESSAGE.COLORS_READ_SUCCESS_MESSAGE,
         page: {
           current,
           perPage,
-          count: result.count,
+          count: task.count,
         },
-        list: result.rows,
+        list: task.rows,
       });
     }).catch(error => {
       console.log(error);
-      error.code = MESSAGE.COLORS_READ_FAILURE_MESSAGE;
+      error.code = MESSAGE.COLORS_READ_FAILURE_CODE;
       error.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE
       return next(error);
     });
@@ -45,11 +46,14 @@ router.route('/')
       Colors.create({
         hex: body.hex,
         name: body.name,
-        font_id: body.fontId,
+        fontColor: body.fontColor,
         cname: body.cname,
         categoryId: body.categoryId,
       })
         .then(task => {
+          const result = task.get({
+            plain: true
+          });
           res.status(200).send({
             code: '10202',
             message: '新增成功',
@@ -58,9 +62,13 @@ router.route('/')
             }],
           });
         })
-        .catch(error => {
-          return next(error);
+        .catch(err, SequelizeValidationError => {
+          // console.log(error);
+          console.log(SequelizeValidationError)
+          // return next(error);
         });
+    }).catch(err => {
+      console.log(err)
     });
   });
 
@@ -84,7 +92,7 @@ router.route('/:id')
         Colors.update({
           hex: body.hex,
           name: body.name,
-          font_id: body.fontId,
+          fontColor: body.fontColor,
           cname: body.cname,
           categoryId: body.categoryId,
         }, {

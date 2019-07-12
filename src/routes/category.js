@@ -17,6 +17,7 @@ router.route('/')
     Category.findAndCountAll({
       limit: perPage,
       offset: (current - 1) * perPage,
+      raw: true,
     }).then(result => {
       res.status(200).send({
         code: MESSAGE.CATEGORY_READ_SUCCESS_CODE,
