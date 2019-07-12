@@ -4,6 +4,7 @@ const router = express.Router();
 const Colors = require('../db/colorsSequelize');
 const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
+const MESSAGE = require('../../MESSAGE.json');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -17,8 +18,8 @@ router.route('/')
       offset: (current - 1) * perPage,
     }).then(result => {
       res.status(200).send({
-        code: '10200',
-        message: '查询成功',
+        code: MESSAGE.COLORS_READ_SUCCESS_CODE,
+        message: MESSAGE.COLORS_READ_SUCCESS_MESSAGE,
         page: {
           current,
           perPage,
@@ -27,7 +28,9 @@ router.route('/')
         list: result.rows,
       });
     }).catch(error => {
-      error.code = '10201';
+      console.log(error);
+      error.code = MESSAGE.COLORS_READ_FAILURE_MESSAGE;
+      error.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE
       return next(error);
     });
   })

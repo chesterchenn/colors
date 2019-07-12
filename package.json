@@ -8,8 +8,8 @@
     "eslint:fix": "npx eslint src test --fix",
     "start:dev": "node src/index",
     "start": "nodemon --exec babel-node -- src/index",
-    "test": "set NODE_ENV=test && npx mocha --recursive test/routes/*.spec.js --exit",
-    "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha --recursive test/routes/*.spec.js --exit"
+    "test": "set NODE_ENV=test && npx mocha test/routes/*.spec.js --exit",
+    "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha test/routes/*.spec.js --exit"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
