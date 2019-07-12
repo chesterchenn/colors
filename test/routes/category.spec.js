@@ -145,6 +145,18 @@ describe('Category API test case: ', function() {
   });
 
   describe('Remove Category', function() {
+    it(`should delete category failure when id isn't exist`, function(done) {
+      request(app)
+        .delete('/category/' + instance.category.nonExistId)
+        .expect(400)
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
+          expect(res.body.code).to.eq(MESSAGE.CATEGORY_DELETE_ID_CODE);
+          done();
+        })
+    })
+
     it('should delete category success', function(done) {
       request(app)
         .delete('/category/' + instanceId)
@@ -152,8 +164,8 @@ describe('Category API test case: ', function() {
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          expect(res.body.message).to.eq('删除成功');
-          expect(res.body.code).to.eq('10109');
+          expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_SUCCESS_MESSAGE);
+          expect(res.body.code).to.eq(MESSAGE.CATEGORY_DELETE_SUCCESS_CODE);
           done();
         })
     })

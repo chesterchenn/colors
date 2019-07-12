@@ -128,8 +128,8 @@ router.route('/:id')
     const id = req.params.id;
     Category.findByPk(id).then(result => {
       if (!result) {
-        const error = new Error('ID不存在');
-        error.code = '10108';
+        const error = new Error(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
+        error.code = MESSAGE.CATEGORY_DELETE_ID_CODE;
         return next(error);
       } else {
         Category.destroy({
@@ -137,12 +137,14 @@ router.route('/:id')
         })
           .then(() => {
             res.status(200).send({
-              message: '删除成功',
-              code: '10109',
+              message: MESSAGE.CATEGORY_DELETE_SUCCESS_MESSAGE,
+              code: MESSAGE.CATEGORY_DELETE_SUCCESS_CODE,
             });
           })
           .catch(error => {
             console.log(error);
+            error.code = MESSAGE.CATEGORY_DELETE_FAILURE_CODE;
+            error.message = MESSAGE.CATEGORY_DELETE_FAILURE_MESSAGE;
             return next(error);
           });
       }
