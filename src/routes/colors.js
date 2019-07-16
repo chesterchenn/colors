@@ -39,8 +39,8 @@ router.route('/')
     const body = req.body;
     Category.findByPk(body.categoryId).then(cateResult => {
       if (!cateResult) {
-        const error = new Error('分类不存在');
-        error.code = '10205';
+        const error = new Error(MESSAGE.COLORS_ADD_CATEGORY_MESSAGE);
+        error.code = MESSAGE.COLORS_ADD_CATEGORY_CODE;
         return next(error);
       }
       Colors.create({
@@ -51,24 +51,27 @@ router.route('/')
         categoryId: body.categoryId,
       })
         .then(task => {
-          const result = task.get({
+          const plainTask = task.get({
             plain: true
           });
           res.status(200).send({
-            code: '10202',
-            message: '新增成功',
-            list: [{
-              ...task
-            }],
+            code: MESSAGE.COLORS_ADD_SUCCESS_CODE,
+            message: MESSAGE.COLORS_ADD_SUCCESS_MESSAGE,
+            list: [plainTask],
           });
         })
-        .catch(err, SequelizeValidationError => {
-          // console.log(error);
-          console.log(SequelizeValidationError)
-          // return next(error);
+        .catch(err => {
+          console.log(err);
+          if (err.errors[0].type === 'unique violation') {
+            err.message = MESSAGE.COLORS_ADD_HEX_MESSAGE;
+            err.code = MESSAGE.COLORS_ADD_HEX_CODE;
+          }
+          return next(err);
         });
     }).catch(err => {
-      console.log(err)
+      console.log(err);
+      error.code = MESSAGE.COLORS_ADD_FAILURE_CODE;
+      error.message = MESSAGE.COLORS_ADD_FAILURE_MESSAGE;
     });
   });
 
@@ -78,15 +81,14 @@ router.route('/:id')
     const body = req.body;
     Colors.findByPk(id).then(result => {
       if (!result) {
-        const error = new Error('ID不存在');
-        error.code = '10209';
+        const error = new Error(MESSAGE.COLORS_UPDATE_ID_MESSAGE);
+        error.code = MESSAGE.COLORS_UPDATE_ID_CODE;
         return next(error);
       }
-
       Category.findByPk(body.categoryId).then(cateResult => {
         if (!cateResult) {
-          const error = new Error('分类不存在');
-          error.code = '10205';
+          const error = new Error(MESSAGE.COLORS_UPDATE_CATEGORY_MESSAGE);
+          error.code = MESSAGE.COLORS_UPDATE_CATEGORY_CODE;
           return next(error);
         }
         Colors.update({
@@ -98,29 +100,60 @@ router.route('/:id')
         }, {
           returning: true, where: { id: id }
         })
-          .then(task => {
-            res.status(200).send({
-              code: '10207',
-              message: '更新成功',
-              list: [task],
-            });
-          })
+          .then(Colors.findByPk(id).then(oldTask => {
+            oldTask.reload().then(task => {
+              const plainTask = task.get({
+                plain: true
+              });
+              res.status(200).send({
+                code: MESSAGE.COLORS_UPDATE_SUCCESS_CODE,
+                message: MESSAGE.COLORS_UPDATE_SUCCESS_MESSAGE,
+                list: [plainTask],
+              });
+            })
+          }))
           .catch(error => {
+            console.log(error);
+            if (error.errors[0].type === 'unique violation') {
+              error.message = MESSAGE.COLORS_ADD_HEX_MESSAGE;
+              error.code = MESSAGE.COLORS_ADD_HEX_CODE;
+            }
             return next(error);
           });
       });
+    })
+    .catch(error => {
+      console.log(error);
+      error.code = MESSAGE.COLORS_UPDATE_FAILURE_CODE;
+      error.message = MESSAGE.COLORS_UPDATE_FAILURE_MESSAGE;
+      return next(error);
     });
   })
+
   .delete((req, res) => {
-    Colors.destroy({
-      where: { id: req.params.id }
-    })
-      .then((rowsDeleted) => {
-        res.status(200).send(rowsDeleted);
+    const deleteId = req.params.id;
+    Colors.findByPk(deleteId).then(result => {
+      if (!result) {
+        const error = new Error(MESSAGE.COLORS_DELETE_ID_MESSAGE);
+        error.code = MESSAGE.COLORS_DELETE_ID_CODE;
+        return next(error);
+      }
+      Colors.destroy({
+        where: { id: deleteId }
       })
-      .catch(error => {
-        res.status(400).json(error);
-      });
+        .then(() => {
+          res.status(200).send({
+            message: MESSAGE.COLORS_DELETE_SUCCESS_MESSAGE,
+            code: MESSAGE.COLORS_DELETE_SUCCESS_CODE,
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          error.code = MESSAGE.COLORS_DELETE_FAILURE_CODE;
+          error.message = MESSAGE.COLORS_DELETE_FAILURE_MESSAGE;
+          return next(error);
+        });
+    })
   });
 
 module.exports = router;

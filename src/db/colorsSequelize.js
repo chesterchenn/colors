@@ -13,10 +13,7 @@ Colors.init({
   hex: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: {
-      args:true,
-      msg: 'Hello from hex.'
-    },
+    unique: true,
   },
   name: {
     type: Sequelize.STRING,

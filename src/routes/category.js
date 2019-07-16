@@ -122,7 +122,10 @@ router.route('/:id')
           });
       }
     })
-      .catch(error => next(error));
+      .catch(error => {
+        console.log(error);
+        next(error);
+      });
   })
   // Delete a category
   .delete((req, res, next) => {
@@ -132,24 +135,24 @@ router.route('/:id')
         const error = new Error(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
         error.code = MESSAGE.CATEGORY_DELETE_ID_CODE;
         return next(error);
-      } else {
-        Category.destroy({
-          where: { id: id }
-        })
-          .then(() => {
-            res.status(200).send({
-              message: MESSAGE.CATEGORY_DELETE_SUCCESS_MESSAGE,
-              code: MESSAGE.CATEGORY_DELETE_SUCCESS_CODE,
-            });
-          })
-          .catch(error => {
-            console.log(error);
-            error.code = MESSAGE.CATEGORY_DELETE_FAILURE_CODE;
-            error.message = MESSAGE.CATEGORY_DELETE_FAILURE_MESSAGE;
-            return next(error);
-          });
       }
-    }).catch(error => next(error));
+      Category.destroy({
+        where: { id: id }
+      })
+        .then(() => {
+          res.status(200).send({
+            message: MESSAGE.CATEGORY_DELETE_SUCCESS_MESSAGE,
+            code: MESSAGE.CATEGORY_DELETE_SUCCESS_CODE,
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          error.code = MESSAGE.CATEGORY_DELETE_FAILURE_CODE;
+          error.message = MESSAGE.CATEGORY_DELETE_FAILURE_MESSAGE;
+          return next(error);
+        });
+    })
+    .catch(error => next(error));
   });
 
 module.exports = router;
