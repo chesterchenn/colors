@@ -53,8 +53,8 @@ describe('Category API test case: ', function() {
           if (err) return err;
           expect(res.body.code).eq(MESSAGE.CATEGORY_ADD_NAME_CODE);
           expect(res.body.message).eq(MESSAGE.CATEGORY_ADD_NAME_MESSAGE);
-        })
-    })
+        });
+    });
 
     it('should create category failure when missing cname', function() {
       request(app)
@@ -67,8 +67,8 @@ describe('Category API test case: ', function() {
           if (err) return err;
           expect(res.body.code).eq(MESSAGE.CATEGORY_ADD_CNAME_CODE);
           expect(res.body.message).eq(MESSAGE.CATEGORY_ADD_CNAME_MESSAGE);
-        })
-    })
+        });
+    });
   });
 
   describe('Put Category', function() {
@@ -145,8 +145,8 @@ describe('Category API test case: ', function() {
           if (err) return err;
           expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
           expect(res.body.code).to.eq(MESSAGE.CATEGORY_DELETE_ID_CODE);
-        })
-    })
+        });
+    });
 
     it('should delete category success', function() {
       request(app)
@@ -157,7 +157,7 @@ describe('Category API test case: ', function() {
           if (err) return err;
           expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_SUCCESS_MESSAGE);
           expect(res.body.code).to.eq(MESSAGE.CATEGORY_DELETE_SUCCESS_CODE);
-        })
-    })
-  })
+        });
+    });
+  });
 });

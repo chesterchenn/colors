@@ -31,7 +31,7 @@ router.route('/')
     }).catch(error => {
       console.log(error);
       error.code = MESSAGE.COLORS_READ_FAILURE_CODE;
-      error.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE
+      error.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE;
       return next(error);
     });
   })
@@ -110,7 +110,7 @@ router.route('/:id')
                 message: MESSAGE.COLORS_UPDATE_SUCCESS_MESSAGE,
                 list: [plainTask],
               });
-            })
+            });
           }))
           .catch(error => {
             console.log(error);
@@ -122,12 +122,12 @@ router.route('/:id')
           });
       });
     })
-    .catch(error => {
-      console.log(error);
-      error.code = MESSAGE.COLORS_UPDATE_FAILURE_CODE;
-      error.message = MESSAGE.COLORS_UPDATE_FAILURE_MESSAGE;
-      return next(error);
-    });
+      .catch(error => {
+        console.log(error);
+        error.code = MESSAGE.COLORS_UPDATE_FAILURE_CODE;
+        error.message = MESSAGE.COLORS_UPDATE_FAILURE_MESSAGE;
+        return next(error);
+      });
   })
 
   .delete((req, res) => {
@@ -153,7 +153,7 @@ router.route('/:id')
           error.message = MESSAGE.COLORS_DELETE_FAILURE_MESSAGE;
           return next(error);
         });
-    })
+    });
   });
 
 module.exports = router;

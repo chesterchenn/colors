@@ -83,44 +83,43 @@ router.route('/:id')
         const error = new Error(MESSAGE.CATEGORY_UPDATE_ID_MESSAGE);
         error.code = MESSAGE.CATEGORY_UPDATE_ID_CODE;
         return next(error);
-      } else {
-        const body = req.body;
-        if (!body.name) {
-          const error = new Error(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
-          error.code = MESSAGE.CATEGORY_UPDATE_NAME_CODE;
-          return next(error);
-        }
-        if (!body.cname) {
-          const error = new Error(MESSAGE.CATEGORY_UPDATE_CNAME_MESSAGE);
-          error.code = MESSAGE.CATEGORY_UPDATE_CNAME_CODE;
-          return next(error);
-        }
-        Category.update({
-          name: body.name,
-          cname: body.cname,
-        }, {
-          where: { id: id }
-        })
-          .then(Category.findByPk(id)
-            .then(oldTask => {
-              oldTask.reload().then(task => {
-                const plainTask = task.get({
-                  plain: true
-                });
-                res.status(200).send({
-                  code: MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE,
-                  message: MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE,
-                  list: [{...plainTask}],
-                });
-              })
-            }))
-          .catch(error => {
-            console.log(error);
-            error.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
-            error.message = MESSAGE.CATEGORY_UPDATE_FAILURE_MESSAGE;
-            return next(error);
-          });
       }
+      const body = req.body;
+      if (!body.name) {
+        const error = new Error(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
+        error.code = MESSAGE.CATEGORY_UPDATE_NAME_CODE;
+        return next(error);
+      }
+      if (!body.cname) {
+        const error = new Error(MESSAGE.CATEGORY_UPDATE_CNAME_MESSAGE);
+        error.code = MESSAGE.CATEGORY_UPDATE_CNAME_CODE;
+        return next(error);
+      }
+      Category.update({
+        name: body.name,
+        cname: body.cname,
+      }, {
+        where: { id: id }
+      })
+        .then(Category.findByPk(id)
+          .then(oldTask => {
+            oldTask.reload().then(task => {
+              const plainTask = task.get({
+                plain: true
+              });
+              res.status(200).send({
+                code: MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE,
+                message: MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE,
+                list: [{...plainTask}],
+              });
+            });
+          }))
+        .catch(error => {
+          console.log(error);
+          error.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
+          error.message = MESSAGE.CATEGORY_UPDATE_FAILURE_MESSAGE;
+          return next(error);
+        });
     })
       .catch(error => {
         console.log(error);
@@ -152,7 +151,7 @@ router.route('/:id')
           return next(error);
         });
     })
-    .catch(error => next(error));
+      .catch(error => next(error));
   });
 
 module.exports = router;
