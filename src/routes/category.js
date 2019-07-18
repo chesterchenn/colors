@@ -55,15 +55,13 @@ router.route('/')
       cname: body.cname,
     })
       .then(task => {
-        const result = task.get({
+        const plainTask = task.get({
           plain: true
         });
         res.status(200).send({
           code: MESSAGE.CATEGORY_ADD_SUCCESS_CODE,
           message: MESSAGE.CATEGORY_ADD_SUCCESS_MESSAGE,
-          list: [{
-            ...result
-          }],
+          list: [plainTask],
         });
       })
       .catch(error => {
@@ -78,13 +76,13 @@ router.route('/:id')
   // Update a category
   .put((req, res, next) => {
     const id = req.params.id;
+    const body = req.body;
     Category.findByPk(id).then(result => {
-      if (!result) {
+      if (result === null) {
         const error = new Error(MESSAGE.CATEGORY_UPDATE_ID_MESSAGE);
         error.code = MESSAGE.CATEGORY_UPDATE_ID_CODE;
         return next(error);
       }
-      const body = req.body;
       if (!body.name) {
         const error = new Error(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
         error.code = MESSAGE.CATEGORY_UPDATE_NAME_CODE;
@@ -101,19 +99,16 @@ router.route('/:id')
       }, {
         where: { id: id }
       })
-        .then(Category.findByPk(id)
-          .then(oldTask => {
-            oldTask.reload().then(task => {
-              const plainTask = task.get({
-                plain: true
-              });
-              res.status(200).send({
-                code: MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE,
-                message: MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE,
-                list: [{...plainTask}],
-              });
+        .then(Category.findByPk(id).then(oldTask => {
+          oldTask.reload().then(task => {
+            const plainTask = task.get({ plain: true });
+            res.status(200).send({
+              code: MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE,
+              message: MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE,
+              list: [plainTask],
             });
-          }))
+          });
+        }))
         .catch(error => {
           console.log(error);
           error.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
