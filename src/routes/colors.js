@@ -43,6 +43,21 @@ router.route('/')
         error.code = MESSAGE.COLORS_ADD_CATEGORY_CODE;
         return next(error);
       }
+      if (!body.name) {
+        const error = new Error(MESSAGE.COLORS_ADD_NAME_MESSAGE);
+        error.code = MESSAGE.COLORS_ADD_NAME_CODE;
+        return next(error);
+      }
+      if (!body.Cname) {
+        const error = new Error(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
+        error.code = MESSAGE.COLORS_ADD_CNAME_CODE;
+        return next(error);
+      }
+      if (!body.hex) {
+        const error = new Error(MESSAGE.COLORS_ADD_LACKHEX_MESSAGE);
+        error.code = MESSAGE.COLORS_ADD_LACKHEX_CODE;
+        return next(error);
+      }
       Colors.create({
         hex: body.hex,
         name: body.name,
