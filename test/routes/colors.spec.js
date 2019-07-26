@@ -51,6 +51,23 @@ describe('Colors API test case: ', function() {
         })
         .catch(done);
     });
+
+    it('should create colors failure when missing cname', function(done) {
+      request(app)
+        .post('/colors')
+        .send({
+          hex: colorInstance.hex,
+          name: colorInstance.name,
+          categoryId: categoryId,
+        })
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_ADD_CNAME_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
   });
 
   /* Delete the category */
