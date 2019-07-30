@@ -48,7 +48,7 @@ router.route('/')
         error.code = MESSAGE.COLORS_ADD_NAME_CODE;
         return next(error);
       }
-      if (!body.Cname) {
+      if (!body.cname) {
         const error = new Error(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
         error.code = MESSAGE.COLORS_ADD_CNAME_CODE;
         return next(error);

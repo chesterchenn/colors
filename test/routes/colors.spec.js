@@ -68,6 +68,24 @@ describe('Colors API test case: ', function() {
         })
         .catch(done);
     });
+
+    it('should create colors failure when missing hex', function(done) {
+      request(app)
+        .post('/colors')
+        .send({
+          name: colorInstance.name,
+          cname: colorInstance.cname,
+          categoryId: categoryId,
+        })
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_ADD_LACKHEX_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_ADD_LACKHEX_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
   });
 
   /* Delete the category */
