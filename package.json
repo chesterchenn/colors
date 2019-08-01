@@ -9,7 +9,7 @@
     "start:dev": "node src/index",
     "start": "nodemon --exec babel-node -- src/index",
     "test": "set NODE_ENV=test && npx mocha test/routes/*.spec.js",
-    "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha",
+    "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha test/routes/*.spec.js",
     "test:category": "set NODE_ENV=test && npx mocha test/routes/category.spec.js",
     "test:colors": "set NODE_ENV=test && npx mocha test/routes/colors.spec.js"
   },

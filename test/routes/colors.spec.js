@@ -163,23 +163,6 @@ describe('Colors API test case: ', function() {
         })
         .catch(done);
     });
-
-    it(`should update color failure when missing name`, function(done) {
-      request(app)
-        .put('/colors/' + colorInstanceId)
-        .send({
-          hex: colorInstance.hex,
-          cname: colorInstance.updateCname,
-          categoryId: categoryId,
-        })
-        .expect(400)
-        .then(function(res) {
-          expect(res.body.code).eq(MESSAGE);
-          expect(res.body.message).eq(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
-          done();
-        })
-        .catch(done);
-    });
   });
 
   describe('Remove Colors', function() {
