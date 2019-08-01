@@ -76,7 +76,6 @@ router.route('/')
           });
         })
         .catch(err => {
-          console.log(err);
           if (err.errors[0].type === 'unique violation') {
             err.message = MESSAGE.COLORS_ADD_HEX_MESSAGE;
             err.code = MESSAGE.COLORS_ADD_HEX_CODE;
