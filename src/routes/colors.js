@@ -94,7 +94,7 @@ router.route('/:id')
     const id = req.params.id;
     const body = req.body;
     Colors.findByPk(id).then(result => {
-      if (!result) {
+      if (result === null) {
         const error = new Error(MESSAGE.COLORS_UPDATE_ID_MESSAGE);
         error.code = MESSAGE.COLORS_UPDATE_ID_CODE;
         return next(error);
@@ -103,6 +103,21 @@ router.route('/:id')
         if (!cateResult) {
           const error = new Error(MESSAGE.COLORS_UPDATE_CATEGORY_MESSAGE);
           error.code = MESSAGE.COLORS_UPDATE_CATEGORY_CODE;
+          return next(error);
+        }
+        if (!body.name) {
+          const error = new Error(MESSAGE.COLORS_UPDATE_NAME_MESSAGE);
+          error.code = MESSAGE.COLORS_UPDATE_NAME_CODE;
+          return next(error);
+        }
+        if (!body.cname) {
+          const error = new Error(MESSAGE.COLORS_UPDATE_CNAME_MESSAGE);
+          error.code = MESSAGE.COLORS_UPDATE_CNAME_CODE;
+          return next(error);
+        }
+        if (!body.hex) {
+          const error = new Error(MESSAGE.COLORS_UPDATE_LACKHEX_MESSAGE);
+          error.code = MESSAGE.COLORS_UPDATE_LACKHEX_CODE;
           return next(error);
         }
         Colors.update({
@@ -144,7 +159,7 @@ router.route('/:id')
       });
   })
 
-  .delete((req, res) => {
+  .delete((req, res, next) => {
     const deleteId = req.params.id;
     Colors.findByPk(deleteId).then(result => {
       if (!result) {

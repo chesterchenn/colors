@@ -136,6 +136,8 @@ describe('Category API test case: ', function() {
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE);
+          expect(res.body.message).eq(MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE);
           expect(res.body.list[0].id).to.equal(instanceId);
           expect(res.body.list[0].name).to.equal(instance.category.updateName);
           expect(res.body.list[0].cname).to.equal(instance.category.updateCname);

@@ -148,17 +148,108 @@ describe('Colors API test case: ', function() {
   describe('Put Colors', function() {
     it(`should update colors failure when id isn't exist`, function(done) {
       request(app)
-        .put('/category/' + colorInstance.nonExistId)
+        .put('/colors/' + colorInstance.nonExistId)
         .send({
-          hex: colorInstance.hex,
+          hex: colorInstance.updateHex,
           name: colorInstance.updateName,
           cname: colorInstance.updateCname,
           categoryId: categoryId,
         })
         .expect(400)
         .then(function(res) {
-          expect(res.body.code).eq(MESSAGE.CATEGORY_UPDATE_ID_CODE);
-          expect(res.body.message).eq(MESSAGE.CATEGORY_UPDATE_ID_MESSAGE);
+          expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_ID_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_ID_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
+    it(`should update colors failure when missing hex`, function(done) {
+      request(app)
+        .put('/colors/' + colorInstanceId)
+        .send({
+          name: colorInstance.updateName,
+          cname: colorInstance.updateCname,
+          categoryId: categoryId,
+        })
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_LACKHEX_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_LACKHEX_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
+    it(`should update colors failure when missing name`, function(done) {
+      request(app)
+        .put('/colors/' + colorInstanceId)
+        .send({
+          hex: colorInstance.updateHex,
+          cname: colorInstance.updateCname,
+          categoryId: categoryId,
+        })
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_NAME_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_NAME_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
+    it(`should update colors failure when missing cname`, function(done) {
+      request(app)
+        .put('/colors/' + colorInstanceId)
+        .send({
+          hex: colorInstance.updateHex,
+          name: colorInstance.updateName,
+          categoryId: categoryId,
+        })
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_CNAME_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_CNAME_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
+    it(`should update colors failure when missing category`, function(done) {
+      request(app)
+        .put('/colors/' + colorInstanceId)
+        .send({
+          hex: colorInstance.updateHex,
+          name: colorInstance.updateName,
+          cname: colorInstance.updateCname,
+        })
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_CATEGORY_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_CATEGORY_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
+    it(`should update colors success`, function(done) {
+      request(app)
+        .put('/colors/' + colorInstanceId)
+        .send({
+          hex: colorInstance.updateHex,
+          name: colorInstance.updateName,
+          cname: colorInstance.updateCname,
+          categoryId: categoryId,
+        })
+        .expect(200)
+        .then(function(res) {
+          expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_SUCCESS_CODE);
+          expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_SUCCESS_MESSAGE);
+          expect(res.body.list[0].id).to.equal(colorInstanceId);
+          expect(res.body.list[0].hex).to.equal(colorInstance.updateHex);
+          expect(res.body.list[0].name).to.equal(colorInstance.updateName);
+          expect(res.body.list[0].cname).to.equal(colorInstance.updateCname);
+          expect(res.body.list[0].categoryId).to.equal(categoryId);
           done();
         })
         .catch(done);
@@ -166,6 +257,18 @@ describe('Colors API test case: ', function() {
   });
 
   describe('Remove Colors', function() {
+    it(`should delete colors failure when id isn't exist`, function(done) {
+      request(app)
+        .delete('/colors/' + colorInstance.nonExistId)
+        .expect(400)
+        .then(function(res) {
+          expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_ID_CODE);
+          expect(res.body.message).to.eq(MESSAGE.COLORS_DELETE_ID_MESSAGE);
+          done();
+        })
+        .catch(done);
+    });
+
     it(`should delete colors success`, function(done) {
       request(app)
         .delete('/colors/' + colorInstanceId)
