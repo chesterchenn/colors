@@ -287,8 +287,8 @@ describe('Colors API test case: ', function() {
     request(app)
       .delete('/category/' + categoryId)
       .then(function() {
-        done()
+        done();
       })
-      .catch(done)
-  })
+      .catch(done);
+  });
 });

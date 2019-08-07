@@ -5,4 +5,5 @@ module.exports = {
   host: '127.0.0.1',
   password: 'password',
   timezone: 'Asia/Shanghai',
+  privateKey: 'privateKey',
 }
