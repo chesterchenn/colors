@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../src/index');
+const app = require('../../index');
 const expect = require('chai').expect;
 const instance = require('../instance');
 const MESSAGE = require('../../MESSAGE.json');

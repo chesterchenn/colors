@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../db/userSequelize');
-const MESSAGE = require('../../MESSAGE.json');
+const MESSAGE = require('../MESSAGE.json');
 
 router.route('/')
   .get((req, res, next) => {

@@ -4,7 +4,7 @@ const router = express.Router();
 const Colors = require('../db/colorsSequelize');
 const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
-const MESSAGE = require('../../MESSAGE.json');
+const MESSAGE = require('../MESSAGE.json');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -37,25 +37,25 @@ router.route('/')
   })
   .post((req, res, next) => {
     const body = req.body;
+    if (!body.name) {
+      const error = new Error(MESSAGE.COLORS_ADD_NAME_MESSAGE);
+      error.code = MESSAGE.COLORS_ADD_NAME_CODE;
+      return next(error);
+    }
+    if (!body.cname) {
+      const error = new Error(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
+      error.code = MESSAGE.COLORS_ADD_CNAME_CODE;
+      return next(error);
+    }
+    if (!body.hex) {
+      const error = new Error(MESSAGE.COLORS_ADD_LACKHEX_MESSAGE);
+      error.code = MESSAGE.COLORS_ADD_LACKHEX_CODE;
+      return next(error);
+    }
     Category.findByPk(body.categoryId).then(cateResult => {
       if (!cateResult) {
         const error = new Error(MESSAGE.COLORS_ADD_CATEGORY_MESSAGE);
         error.code = MESSAGE.COLORS_ADD_CATEGORY_CODE;
-        return next(error);
-      }
-      if (!body.name) {
-        const error = new Error(MESSAGE.COLORS_ADD_NAME_MESSAGE);
-        error.code = MESSAGE.COLORS_ADD_NAME_CODE;
-        return next(error);
-      }
-      if (!body.cname) {
-        const error = new Error(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
-        error.code = MESSAGE.COLORS_ADD_CNAME_CODE;
-        return next(error);
-      }
-      if (!body.hex) {
-        const error = new Error(MESSAGE.COLORS_ADD_LACKHEX_MESSAGE);
-        error.code = MESSAGE.COLORS_ADD_LACKHEX_CODE;
         return next(error);
       }
       Colors.create({

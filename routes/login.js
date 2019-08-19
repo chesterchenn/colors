@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../db/userSequelize');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const config = require('../../config');
+const config = require('../config');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));

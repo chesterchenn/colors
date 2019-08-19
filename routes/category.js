@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../db/categorySequelize');
 const bodyParser = require('body-parser');
-const MESSAGE = require('../../MESSAGE.json');
+const MESSAGE = require('../MESSAGE.json');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
