@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "eslint": "npx eslint routes db middleware test",
-    "eslint:fix": "npx eslint src test --fix",
-    "start:dev": "node index",
+    "eslint:fix": "npx eslint routes db middleware test --fix",
     "start": "nodemon --exec babel-node -- index",
     "test": "set NODE_ENV=test && npx mocha test/routes/*.spec.js",
     "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha test/routes/*.spec.js",

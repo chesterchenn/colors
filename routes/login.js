@@ -26,6 +26,8 @@ router.route('/')
       res.status(200).send({
         token,
       });
+    }).catch(err => {
+      console.log(err);
     });
   });
 
