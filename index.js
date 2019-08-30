@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 3030;
+
 const login = require('./routes/login');
 const user = require('./routes/user');
 const category = require('./routes/category');
 const colors = require('./routes/colors');
+const qcategory = require('./routes/Qcategory');
+
 const auth = require('./middleware/auth');
 
 app.use((req, res, next) => {
@@ -18,6 +21,7 @@ app.use('/', auth);
 app.use('/user', user);
 app.use('/category', category);
 app.use('/colors', colors);
+app.use('/qcategory', qcategory);
 
 // Client Error Handler
 app.use((err, req, res, next) => {

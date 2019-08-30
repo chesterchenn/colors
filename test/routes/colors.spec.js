@@ -4,13 +4,15 @@ const expect = require('chai').expect;
 const MESSAGE = require('../../MESSAGE.json');
 const colorInstance = require('../instance').color;
 const categoryInstance = require('../instance').category;
+const api = '/colors';
+const categoryAPI = '/category';
 
 describe('Colors API test case: ', function() {
   let categoryId, colorInstanceId;
   /* Create a category to use test */
   before(function() {
     request(app)
-      .post('/category')
+      .post(categoryAPI)
       .send({
         name: categoryInstance.name,
         cname: categoryInstance.cname,
@@ -23,7 +25,7 @@ describe('Colors API test case: ', function() {
   describe('Get Colors', function() {
     it('should get colors list', function(done) {
       request(app)
-        .get('/colors')
+        .get(api)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.COLORS_READ_SUCCESS_CODE);
@@ -37,7 +39,7 @@ describe('Colors API test case: ', function() {
   describe('Post Colors', function() {
     it('should create colors failure when missing name', function(done) {
       request(app)
-        .post('/colors')
+        .post(api)
         .send({
           hex: colorInstance.hex,
           cname: colorInstance.cname,
@@ -54,7 +56,7 @@ describe('Colors API test case: ', function() {
 
     it('should create colors failure when missing cname', function(done) {
       request(app)
-        .post('/colors')
+        .post(api)
         .send({
           hex: colorInstance.hex,
           name: colorInstance.name,
@@ -71,7 +73,7 @@ describe('Colors API test case: ', function() {
 
     it('should create colors failure when missing hex', function(done) {
       request(app)
-        .post('/colors')
+        .post(api)
         .send({
           name: colorInstance.name,
           cname: colorInstance.cname,
@@ -88,7 +90,7 @@ describe('Colors API test case: ', function() {
 
     it('should create colors failure when missing category', function(done) {
       request(app)
-        .post('/colors')
+        .post(api)
         .send({
           hex: colorInstance.hex,
           name: colorInstance.name,
@@ -105,7 +107,7 @@ describe('Colors API test case: ', function() {
 
     it('should create colors success', function(done) {
       request(app)
-        .post('/colors')
+        .post(api)
         .send({
           hex: colorInstance.hex,
           name: colorInstance.name,
@@ -128,7 +130,7 @@ describe('Colors API test case: ', function() {
 
     it('should create colors failure when hex is exist', function(done) {
       request(app)
-        .post('/colors')
+        .post(api)
         .send({
           hex: colorInstance.hex,
           name: colorInstance.name,
@@ -148,7 +150,7 @@ describe('Colors API test case: ', function() {
   describe('Put Colors', function() {
     it(`should update colors failure when id isn't exist`, function(done) {
       request(app)
-        .put('/colors/' + colorInstance.nonExistId)
+        .put(api + '/' + colorInstance.nonExistId)
         .send({
           hex: colorInstance.updateHex,
           name: colorInstance.updateName,
@@ -166,7 +168,7 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing hex`, function(done) {
       request(app)
-        .put('/colors/' + colorInstanceId)
+        .put(api + '/' + colorInstanceId)
         .send({
           name: colorInstance.updateName,
           cname: colorInstance.updateCname,
@@ -183,7 +185,7 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing name`, function(done) {
       request(app)
-        .put('/colors/' + colorInstanceId)
+        .put(api + '/' + colorInstanceId)
         .send({
           hex: colorInstance.updateHex,
           cname: colorInstance.updateCname,
@@ -200,7 +202,7 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing cname`, function(done) {
       request(app)
-        .put('/colors/' + colorInstanceId)
+        .put(api + '/' + colorInstanceId)
         .send({
           hex: colorInstance.updateHex,
           name: colorInstance.updateName,
@@ -217,7 +219,7 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing category`, function(done) {
       request(app)
-        .put('/colors/' + colorInstanceId)
+        .put(api + '/' + colorInstanceId)
         .send({
           hex: colorInstance.updateHex,
           name: colorInstance.updateName,
@@ -234,7 +236,7 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors success`, function(done) {
       request(app)
-        .put('/colors/' + colorInstanceId)
+        .put(api + '/' + colorInstanceId)
         .send({
           hex: colorInstance.updateHex,
           name: colorInstance.updateName,
@@ -259,7 +261,7 @@ describe('Colors API test case: ', function() {
   describe('Remove Colors', function() {
     it(`should delete colors failure when id isn't exist`, function(done) {
       request(app)
-        .delete('/colors/' + colorInstance.nonExistId)
+        .delete(api + '/' + colorInstance.nonExistId)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_ID_CODE);
@@ -271,7 +273,7 @@ describe('Colors API test case: ', function() {
 
     it(`should delete colors success`, function(done) {
       request(app)
-        .delete('/colors/' + colorInstanceId)
+        .delete(api + '/' + colorInstanceId)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_SUCCESS_CODE);
@@ -285,7 +287,7 @@ describe('Colors API test case: ', function() {
   /* Delete the category */
   after(function(done) {
     request(app)
-      .delete('/category/' + categoryId)
+      .delete(categoryAPI + '/' + categoryId)
       .then(function() {
         done();
       })

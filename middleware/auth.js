@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const NODE_ENV = process.env.NODE_ENV;
 const auth = (req, res, next) => {
-  if (NODE_ENV.trim() === 'test') {
+  if (NODE_ENV && NODE_ENV.trim() === 'test') {
     return next();
   }
   let token = req.headers["authorization"];

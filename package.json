@@ -10,7 +10,8 @@
     "test": "set NODE_ENV=test && npx mocha test/routes/*.spec.js",
     "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha test/routes/*.spec.js",
     "test:category": "set NODE_ENV=test && npx mocha test/routes/category.spec.js",
-    "test:colors": "set NODE_ENV=test && npx mocha test/routes/colors.spec.js"
+    "test:colors": "set NODE_ENV=test && npx mocha test/routes/colors.spec.js",
+    "test:qcategory": "set NODE_ENV=test && npx mocha test/routes/Qcategory.spec.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

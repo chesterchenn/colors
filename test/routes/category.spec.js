@@ -3,6 +3,7 @@ const app = require('../../index');
 const expect = require('chai').expect;
 const instance = require('../instance');
 const MESSAGE = require('../../MESSAGE.json');
+const api = '/category';
 
 describe('Category API test case: ', function() {
   let instanceId = '';
@@ -10,7 +11,7 @@ describe('Category API test case: ', function() {
   describe('Get category', function() {
     it('should read category', function(done) {
       request(app)
-        .get('/category')
+        .get(api)
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function(res) {
@@ -25,7 +26,7 @@ describe('Category API test case: ', function() {
   describe('Post category', function() {
     it('should create category failure when missing name', function(done) {
       request(app)
-        .post('/category')
+        .post(api)
         .send({
           cname: instance.category.cname,
         })
@@ -40,7 +41,7 @@ describe('Category API test case: ', function() {
 
     it('should create category failure when missing cname', function(done) {
       request(app)
-        .post('/category')
+        .post(api)
         .send({
           name: instance.category.name,
         })
@@ -55,7 +56,7 @@ describe('Category API test case: ', function() {
 
     it('should create category success', function(done) {
       request(app)
-        .post('/category')
+        .post(api)
         .send({
           name: instance.category.name,
           cname: instance.category.cname,
@@ -78,7 +79,7 @@ describe('Category API test case: ', function() {
   describe('Put Category', function() {
     it(`should update category failure when id isn't exist`, function(done) {
       request(app)
-        .put('/category/' + instance.category.nonExistId)
+        .put(api + '/' + instance.category.nonExistId)
         .send({
           name: instance.category.updateName,
           cname: instance.category.updateCname,
@@ -96,7 +97,7 @@ describe('Category API test case: ', function() {
 
     it(`should update category failure when missing name`, function(done) {
       request(app)
-        .put('/category/' + instanceId)
+        .put(api + '/' + instanceId)
         .send({
           cname: instance.category.updateCname,
         })
@@ -112,7 +113,7 @@ describe('Category API test case: ', function() {
 
     it(`should update category failure when missing cname`, function(done) {
       request(app)
-        .put('/category/' + instanceId)
+        .put(api + '/' + instanceId)
         .send({
           name: instance.category.updateName,
         })
@@ -128,7 +129,7 @@ describe('Category API test case: ', function() {
 
     it(`should update category success`, function(done) {
       request(app)
-        .put('/category/' + instanceId)
+        .put(api + '/' + instanceId)
         .send({
           name: instance.category.updateName,
           cname: instance.category.updateCname,
@@ -150,7 +151,7 @@ describe('Category API test case: ', function() {
   describe('Remove Category', function() {
     it(`should delete category failure when id isn't exist`, function(done) {
       request(app)
-        .delete('/category/' + instance.category.nonExistId)
+        .delete(api + '/' + instance.category.nonExistId)
         .expect(400)
         .then(function(res) {
           expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
@@ -162,7 +163,7 @@ describe('Category API test case: ', function() {
 
     it('should delete category success', function(done) {
       request(app)
-        .delete('/category/' + instanceId)
+        .delete(api + '/' + instanceId)
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function(res) {
