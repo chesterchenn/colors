@@ -7,6 +7,7 @@ const user = require('./routes/user');
 const category = require('./routes/category');
 const colors = require('./routes/colors');
 const qcategory = require('./routes/Qcategory');
+const question = require('./routes/question');
 
 const auth = require('./middleware/auth');
 
@@ -22,6 +23,7 @@ app.use('/user', user);
 app.use('/category', category);
 app.use('/colors', colors);
 app.use('/qcategory', qcategory);
+app.use('/question', question);
 
 // Client Error Handler
 app.use((err, req, res, next) => {

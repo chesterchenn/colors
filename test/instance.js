@@ -15,3 +15,11 @@ exports.color = {
   updateCname: '更新测试颜色',
   nonExistId: -22222,
 };
+
+exports.question = {
+  question: 'Hello World?',
+  answer: 'Hello World!',
+  updateQuestion: '你好？',
+  updateAnswer: '你好!',
+  nonExistId: -33333,
+};
