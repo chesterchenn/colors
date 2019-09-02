@@ -10,6 +10,7 @@ const qcategory = require('./routes/Qcategory');
 const question = require('./routes/question');
 
 const auth = require('./middleware/auth');
+const helmet = require('helmet');
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(helmet());
 app.use('/login', login);
 app.use('/', auth);
 app.use('/user', user);
