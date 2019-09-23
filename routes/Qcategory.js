@@ -83,7 +83,6 @@ router.route('/:id')
       }
       Qcategory.update({
         name: body.name,
-        cname: body.cname,
       }, {
         where: { id: id }
       })
