@@ -21,11 +21,9 @@ router.route('/')
       res.status(200).send({
         code: MESSAGE.QUESTION_READ_SUCCESS_CODE,
         message: MESSAGE.QUESTION_READ_SUCCESS_MESSAGE,
-        page: {
-          current,
-          perPage,
-          count: task.count,
-        },
+        current,
+        perPage,
+        count: task.count,
         list: task.rows,
       });
     }).catch(error => {

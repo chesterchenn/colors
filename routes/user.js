@@ -16,11 +16,9 @@ router.route('/')
       res.status(200).send({
         code: MESSAGE.USER_READ_SUCCESS_CODE,
         message: MESSAGE.USER_READ_SUCCESS_MESSAGE,
-        page: {
-          current,
-          perPage,
-          count: result.count,
-        },
+        current,
+        perPage,
+        count: result.count,
         list: result.rows,
       });
     }).catch(error => {
