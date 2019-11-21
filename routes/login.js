@@ -4,12 +4,13 @@ const User = require('../db/userSequelize');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const MESSAGE = require('../MESSAGE.json');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/')
-  .post((req, res) => {
+  .post((req, res, next) => {
     const body = req.body;
     User.findOne({
       raw: true,
@@ -26,8 +27,11 @@ router.route('/')
       res.status(200).send({
         token,
       });
-    }).catch(err => {
-      console.log(err);
+    }).catch(error => {
+      console.log(error);
+      error.code = MESSAGE.LOGIN_READ_FAILURE_CODE;
+      error.message = MESSAGE.LOGIN_READ_FAILURE_MESSAGE;
+      return next(error);
     });
   });
 
