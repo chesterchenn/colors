@@ -1,3 +1,4 @@
+/* 用户管理页面 */
 const express = require('express');
 const router = express.Router();
 const User = require('../db/userSequelize');

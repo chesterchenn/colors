@@ -1,4 +1,4 @@
-/* question category CRUD */
+/* 问题分类页面 */
 const express = require('express');
 const router = express.Router();
 const Qcategory = require('../db/Qcategory');

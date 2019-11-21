@@ -1,4 +1,4 @@
-// Category SQL CURD
+/* 颜色页面 */
 const express = require('express');
 const router = express.Router();
 const Colors = require('../db/colorsSequelize');

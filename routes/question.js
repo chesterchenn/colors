@@ -1,4 +1,4 @@
-// Quetion SQL CURD
+/* 问题页面 */
 const express = require('express');
 const router = express.Router();
 const Question = require('../db/question');
