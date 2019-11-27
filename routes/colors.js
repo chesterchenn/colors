@@ -26,35 +26,35 @@ router.route('/')
         count: task.count,
         list: task.rows,
       });
-    }).catch(error => {
-      console.log(error);
-      error.code = MESSAGE.COLORS_READ_FAILURE_CODE;
-      error.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE;
-      return next(error);
+    }).catch(err => {
+      console.log(err);
+      err.code = MESSAGE.COLORS_READ_FAILURE_CODE;
+      err.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE;
+      return next(err);
     });
   })
   .post((req, res, next) => {
     const body = req.body;
     if (!body.name) {
-      const error = new Error(MESSAGE.COLORS_ADD_NAME_MESSAGE);
-      error.code = MESSAGE.COLORS_ADD_NAME_CODE;
-      return next(error);
+      const err = new Error(MESSAGE.COLORS_ADD_NAME_MESSAGE);
+      err.code = MESSAGE.COLORS_ADD_NAME_CODE;
+      return next(err);
     }
     if (!body.cname) {
-      const error = new Error(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
-      error.code = MESSAGE.COLORS_ADD_CNAME_CODE;
-      return next(error);
+      const err = new Error(MESSAGE.COLORS_ADD_CNAME_MESSAGE);
+      err.code = MESSAGE.COLORS_ADD_CNAME_CODE;
+      return next(err);
     }
     if (!body.hex) {
-      const error = new Error(MESSAGE.COLORS_ADD_LACKHEX_MESSAGE);
-      error.code = MESSAGE.COLORS_ADD_LACKHEX_CODE;
-      return next(error);
+      const err = new Error(MESSAGE.COLORS_ADD_LACKHEX_MESSAGE);
+      err.code = MESSAGE.COLORS_ADD_LACKHEX_CODE;
+      return next(err);
     }
     Category.findByPk(body.categoryId).then(cateResult => {
       if (!cateResult) {
-        const error = new Error(MESSAGE.COLORS_ADD_CATEGORY_MESSAGE);
-        error.code = MESSAGE.COLORS_ADD_CATEGORY_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.COLORS_ADD_CATEGORY_MESSAGE);
+        err.code = MESSAGE.COLORS_ADD_CATEGORY_CODE;
+        return next(err);
       }
       Colors.create({
         hex: body.hex,
@@ -82,8 +82,8 @@ router.route('/')
         });
     }).catch(err => {
       console.log(err);
-      error.code = MESSAGE.COLORS_ADD_FAILURE_CODE;
-      error.message = MESSAGE.COLORS_ADD_FAILURE_MESSAGE;
+      err.code = MESSAGE.COLORS_ADD_FAILURE_CODE;
+      err.message = MESSAGE.COLORS_ADD_FAILURE_MESSAGE;
     });
   });
 
@@ -93,30 +93,30 @@ router.route('/:id')
     const body = req.body;
     Colors.findByPk(id).then(result => {
       if (result === null) {
-        const error = new Error(MESSAGE.COLORS_UPDATE_ID_MESSAGE);
-        error.code = MESSAGE.COLORS_UPDATE_ID_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.COLORS_UPDATE_ID_MESSAGE);
+        err.code = MESSAGE.COLORS_UPDATE_ID_CODE;
+        return next(err);
       }
       Category.findByPk(body.categoryId).then(cateResult => {
         if (!cateResult) {
-          const error = new Error(MESSAGE.COLORS_UPDATE_CATEGORY_MESSAGE);
-          error.code = MESSAGE.COLORS_UPDATE_CATEGORY_CODE;
-          return next(error);
+          const err = new Error(MESSAGE.COLORS_UPDATE_CATEGORY_MESSAGE);
+          err.code = MESSAGE.COLORS_UPDATE_CATEGORY_CODE;
+          return next(err);
         }
         if (!body.name) {
-          const error = new Error(MESSAGE.COLORS_UPDATE_NAME_MESSAGE);
-          error.code = MESSAGE.COLORS_UPDATE_NAME_CODE;
-          return next(error);
+          const err = new Error(MESSAGE.COLORS_UPDATE_NAME_MESSAGE);
+          err.code = MESSAGE.COLORS_UPDATE_NAME_CODE;
+          return next(err);
         }
         if (!body.cname) {
-          const error = new Error(MESSAGE.COLORS_UPDATE_CNAME_MESSAGE);
-          error.code = MESSAGE.COLORS_UPDATE_CNAME_CODE;
-          return next(error);
+          const err = new Error(MESSAGE.COLORS_UPDATE_CNAME_MESSAGE);
+          err.code = MESSAGE.COLORS_UPDATE_CNAME_CODE;
+          return next(err);
         }
         if (!body.hex) {
-          const error = new Error(MESSAGE.COLORS_UPDATE_LACKHEX_MESSAGE);
-          error.code = MESSAGE.COLORS_UPDATE_LACKHEX_CODE;
-          return next(error);
+          const err = new Error(MESSAGE.COLORS_UPDATE_LACKHEX_MESSAGE);
+          err.code = MESSAGE.COLORS_UPDATE_LACKHEX_CODE;
+          return next(err);
         }
         Colors.update({
           hex: body.hex,
@@ -139,21 +139,21 @@ router.route('/:id')
               });
             });
           }))
-          .catch(error => {
-            console.log(error);
-            if (error.errors[0].type === 'unique violation') {
-              error.message = MESSAGE.COLORS_ADD_HEX_MESSAGE;
-              error.code = MESSAGE.COLORS_ADD_HEX_CODE;
+          .catch(err => {
+            console.log(err);
+            if (err.errors[0].type === 'unique violation') {
+              err.message = MESSAGE.COLORS_ADD_HEX_MESSAGE;
+              err.code = MESSAGE.COLORS_ADD_HEX_CODE;
             }
-            return next(error);
+            return next(err);
           });
       });
     })
-      .catch(error => {
-        console.log(error);
-        error.code = MESSAGE.COLORS_UPDATE_FAILURE_CODE;
-        error.message = MESSAGE.COLORS_UPDATE_FAILURE_MESSAGE;
-        return next(error);
+      .catch(err => {
+        console.log(err);
+        err.code = MESSAGE.COLORS_UPDATE_FAILURE_CODE;
+        err.message = MESSAGE.COLORS_UPDATE_FAILURE_MESSAGE;
+        return next(err);
       });
   })
 
@@ -161,9 +161,9 @@ router.route('/:id')
     const deleteId = req.params.id;
     Colors.findByPk(deleteId).then(result => {
       if (!result) {
-        const error = new Error(MESSAGE.COLORS_DELETE_ID_MESSAGE);
-        error.code = MESSAGE.COLORS_DELETE_ID_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.COLORS_DELETE_ID_MESSAGE);
+        err.code = MESSAGE.COLORS_DELETE_ID_CODE;
+        return next(err);
       }
       Colors.destroy({
         where: { id: deleteId }
@@ -174,11 +174,11 @@ router.route('/:id')
             code: MESSAGE.COLORS_DELETE_SUCCESS_CODE,
           });
         })
-        .catch(error => {
-          console.log(error);
-          error.code = MESSAGE.COLORS_DELETE_FAILURE_CODE;
-          error.message = MESSAGE.COLORS_DELETE_FAILURE_MESSAGE;
-          return next(error);
+        .catch(err => {
+          console.log(err);
+          err.code = MESSAGE.COLORS_DELETE_FAILURE_CODE;
+          err.message = MESSAGE.COLORS_DELETE_FAILURE_MESSAGE;
+          return next(err);
         });
     });
   });

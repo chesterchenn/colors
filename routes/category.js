@@ -27,11 +27,11 @@ router.route('/')
         count: result.count,
         list: result.rows,
       });
-    }).catch(error => {
-      console.log(error);
-      error.code = MESSAGE.CATEGORY_READ_FAILURE_CODE;
-      error.message = MESSAGE.CATEGORY_READ_FAILURE_CODE;
-      return next(error);
+    }).catch(err => {
+      console.log(err);
+      err.code = MESSAGE.CATEGORY_READ_FAILURE_CODE;
+      err.message = MESSAGE.CATEGORY_READ_FAILURE_CODE;
+      return next(err);
     });
   })
 
@@ -39,14 +39,14 @@ router.route('/')
   .post((req, res, next) => {
     const body = req.body;
     if (!body.name) {
-      const error = new Error(MESSAGE.CATEGORY_ADD_NAME_MESSAGE);
-      error.code = MESSAGE.CATEGORY_ADD_NAME_CODE;
-      return next(error);
+      const err = new Error(MESSAGE.CATEGORY_ADD_NAME_MESSAGE);
+      err.code = MESSAGE.CATEGORY_ADD_NAME_CODE;
+      return next(err);
     }
     if (!body.cname) {
-      const error = new Error(MESSAGE.CATEGORY_ADD_CNAME_MESSAGE);
-      error.code = MESSAGE.CATEGORY_ADD_CNAME_CODE;
-      return next(error);
+      const err = new Error(MESSAGE.CATEGORY_ADD_CNAME_MESSAGE);
+      err.code = MESSAGE.CATEGORY_ADD_CNAME_CODE;
+      return next(err);
     }
     Category.create({
       name: body.name,
@@ -62,11 +62,11 @@ router.route('/')
           list: [plainTask],
         });
       })
-      .catch(error => {
-        console.log(error);
-        error.code = MESSAGE.CATEGORY_ADD_FAILURE_CODE;
-        error.message = MESSAGE.CATEGORY_ADD_FAILURE_MESSAGE;
-        return next(error);
+      .catch(err => {
+        console.log(err);
+        err.code = MESSAGE.CATEGORY_ADD_FAILURE_CODE;
+        err.message = MESSAGE.CATEGORY_ADD_FAILURE_MESSAGE;
+        return next(err);
       });
   });
 
@@ -77,19 +77,19 @@ router.route('/:id')
     const body = req.body;
     Category.findByPk(id).then(result => {
       if (result === null) {
-        const error = new Error(MESSAGE.CATEGORY_UPDATE_ID_MESSAGE);
-        error.code = MESSAGE.CATEGORY_UPDATE_ID_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.CATEGORY_UPDATE_ID_MESSAGE);
+        err.code = MESSAGE.CATEGORY_UPDATE_ID_CODE;
+        return next(err);
       }
       if (!body.name) {
-        const error = new Error(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
-        error.code = MESSAGE.CATEGORY_UPDATE_NAME_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.CATEGORY_UPDATE_NAME_MESSAGE);
+        err.code = MESSAGE.CATEGORY_UPDATE_NAME_CODE;
+        return next(err);
       }
       if (!body.cname) {
-        const error = new Error(MESSAGE.CATEGORY_UPDATE_CNAME_MESSAGE);
-        error.code = MESSAGE.CATEGORY_UPDATE_CNAME_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.CATEGORY_UPDATE_CNAME_MESSAGE);
+        err.code = MESSAGE.CATEGORY_UPDATE_CNAME_CODE;
+        return next(err);
       }
       Category.update({
         name: body.name,
@@ -107,16 +107,16 @@ router.route('/:id')
             });
           });
         }))
-        .catch(error => {
-          console.log(error);
-          error.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
-          error.message = MESSAGE.CATEGORY_UPDATE_FAILURE_MESSAGE;
-          return next(error);
+        .catch(err => {
+          console.log(err);
+          err.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
+          err.message = MESSAGE.CATEGORY_UPDATE_FAILURE_MESSAGE;
+          return next(err);
         });
     })
-      .catch(error => {
-        console.log(error);
-        next(error);
+      .catch(err => {
+        console.log(err);
+        next(err);
       });
   })
   // Delete a category
@@ -124,9 +124,9 @@ router.route('/:id')
     const id = req.params.id;
     Category.findByPk(id).then(result => {
       if (!result) {
-        const error = new Error(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
-        error.code = MESSAGE.CATEGORY_DELETE_ID_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
+        err.code = MESSAGE.CATEGORY_DELETE_ID_CODE;
+        return next(err);
       }
       Category.destroy({
         where: { id: id }
@@ -137,14 +137,14 @@ router.route('/:id')
             code: MESSAGE.CATEGORY_DELETE_SUCCESS_CODE,
           });
         })
-        .catch(error => {
-          console.log(error);
-          error.code = MESSAGE.CATEGORY_DELETE_FAILURE_CODE;
-          error.message = MESSAGE.CATEGORY_DELETE_FAILURE_MESSAGE;
-          return next(error);
+        .catch(err => {
+          console.log(err);
+          err.code = MESSAGE.CATEGORY_DELETE_FAILURE_CODE;
+          err.message = MESSAGE.CATEGORY_DELETE_FAILURE_MESSAGE;
+          return next(err);
         });
     })
-      .catch(error => next(error));
+      .catch(err => next(err));
   });
 
 module.exports = router;

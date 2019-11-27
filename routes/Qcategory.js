@@ -26,11 +26,11 @@ router.route('/')
         count: result.count,
         list: result.rows,
       });
-    }).catch(error => {
-      console.log(error);
-      error.code = MESSAGE.QCATEGORY_READ_FAILURE_CODE;
-      error.message = MESSAGE.QCATEGORY_READ_FAILURE_CODE;
-      return next(error);
+    }).catch(err => {
+      console.log(err);
+      err.code = MESSAGE.QCATEGORY_READ_FAILURE_CODE;
+      err.message = MESSAGE.QCATEGORY_READ_FAILURE_CODE;
+      return next(err);
     });
   })
 
@@ -38,9 +38,9 @@ router.route('/')
   .post((req, res, next) => {
     const body = req.body;
     if (!body.name) {
-      const error = new Error(MESSAGE.QCATEGORY_ADD_NAME_MESSAGE);
-      error.code = MESSAGE.QCATEGORY_ADD_NAME_CODE;
-      return next(error);
+      const err = new Error(MESSAGE.QCATEGORY_ADD_NAME_MESSAGE);
+      err.code = MESSAGE.QCATEGORY_ADD_NAME_CODE;
+      return next(err);
     }
     Qcategory.create({
       name: body.name,
@@ -55,11 +55,11 @@ router.route('/')
           list: [plainTask],
         });
       })
-      .catch(error => {
-        console.log(error);
-        error.code = MESSAGE.QCATEGORY_ADD_FAILURE_CODE;
-        error.message = MESSAGE.QCATEGORY_ADD_FAILURE_MESSAGE;
-        return next(error);
+      .catch(err => {
+        console.log(err);
+        err.code = MESSAGE.QCATEGORY_ADD_FAILURE_CODE;
+        err.message = MESSAGE.QCATEGORY_ADD_FAILURE_MESSAGE;
+        return next(err);
       });
   });
 
@@ -70,14 +70,14 @@ router.route('/:id')
     const body = req.body;
     Qcategory.findByPk(id).then(result => {
       if (result === null) {
-        const error = new Error(MESSAGE.QCATEGORY_UPDATE_ID_MESSAGE);
-        error.code = MESSAGE.QCATEGORY_UPDATE_ID_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.QCATEGORY_UPDATE_ID_MESSAGE);
+        err.code = MESSAGE.QCATEGORY_UPDATE_ID_CODE;
+        return next(err);
       }
       if (!body.name) {
-        const error = new Error(MESSAGE.QCATEGORY_UPDATE_NAME_MESSAGE);
-        error.code = MESSAGE.QCATEGORY_UPDATE_NAME_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.QCATEGORY_UPDATE_NAME_MESSAGE);
+        err.code = MESSAGE.QCATEGORY_UPDATE_NAME_CODE;
+        return next(err);
       }
       Qcategory.update({
         name: body.name,
@@ -94,16 +94,16 @@ router.route('/:id')
             });
           });
         }))
-        .catch(error => {
-          console.log(error);
-          error.code = MESSAGE.QCATEGORY_UPDATE_FAILURE_CODE;
-          error.message = MESSAGE.QCATEGORY_UPDATE_FAILURE_MESSAGE;
-          return next(error);
+        .catch(err => {
+          console.log(err);
+          err.code = MESSAGE.QCATEGORY_UPDATE_FAILURE_CODE;
+          err.message = MESSAGE.QCATEGORY_UPDATE_FAILURE_MESSAGE;
+          return next(err);
         });
     })
-      .catch(error => {
-        console.log(error);
-        next(error);
+      .catch(err => {
+        console.log(err);
+        next(err);
       });
   })
   /* Delete question category */
@@ -111,9 +111,9 @@ router.route('/:id')
     const id = req.params.id;
     Qcategory.findByPk(id).then(result => {
       if (!result) {
-        const error = new Error(MESSAGE.QCATEGORY_DELETE_ID_MESSAGE);
-        error.code = MESSAGE.QCATEGORY_DELETE_ID_CODE;
-        return next(error);
+        const err = new Error(MESSAGE.QCATEGORY_DELETE_ID_MESSAGE);
+        err.code = MESSAGE.QCATEGORY_DELETE_ID_CODE;
+        return next(err);
       }
       Qcategory.destroy({
         where: { id: id }
@@ -124,14 +124,14 @@ router.route('/:id')
             code: MESSAGE.QCATEGORY_DELETE_SUCCESS_CODE,
           });
         })
-        .catch(error => {
-          console.log(error);
-          error.code = MESSAGE.QCATEGORY_DELETE_FAILURE_CODE;
-          error.message = MESSAGE.QCATEGORY_DELETE_FAILURE_MESSAGE;
-          return next(error);
+        .catch(err => {
+          console.log(err);
+          err.code = MESSAGE.QCATEGORY_DELETE_FAILURE_CODE;
+          err.message = MESSAGE.QCATEGORY_DELETE_FAILURE_MESSAGE;
+          return next(err);
         });
     })
-      .catch(error => next(error));
+      .catch(err => next(err));
   });
 
 module.exports = router;

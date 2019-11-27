@@ -28,23 +28,31 @@ router.route('/')
         count: result.count,
         list: result.rows,
       });
-    }).catch(error => {
-      console.error(error);
-      error.code = USER.CATEGORY_READ_FAILURE_CODE;
-      error.message = USER.CATEGORY_READ_FAILURE_CODE;
-      return next(error);
+    }).catch(err => {
+      console.error(err);
+      err.code = USER.CATEGORY_READ_FAILURE_CODE;
+      err.message = USER.CATEGORY_READ_FAILURE_CODE;
+      return next(err);
     });
   })
+
   .post((req, res, next) => {
     const body = req.body;
-    const role = req.role || 2;
+    const role = req.role;
     if (!body.user) {
-      const error = new Error('用户不能为空');
-      return next(error);
+      const err = new Error(MESSAGE.USER_ADD_NO_USER_MESSAGE);
+      err.code = MESSAGE.USER_ADD_NO_USER_CODE;
+      return next(err);
     }
     if (!body.password) {
-      const error = new Error('密码不能为空');
-      return next(error);
+      const err = new Error(MESSAGE.USER_ADD_NO_PASSWD_MESSAGE);
+      err.code = MESSAGE.USER_ADD_NO_PASSWD_CODE;
+      return next(err);
+    }
+    if (body.password.length < 6) {
+      const err = new Error(MESSAGE.USER_ADD_PASSWD_LENGTH_MESSAGE);
+      err.code = MESSAGE.USER_ADD_PASSWD_LENGTH_CODE;
+      return next(err);
     }
     bcrypt.genSalt(saltRounds, (err, salt) => {
       if (err) {
@@ -61,12 +69,20 @@ router.route('/')
         })
           .then(() => {
             res.status(200).send({
-              code: '创建用户成功',
-              message: '创建用户成功',
+              code: MESSAGE.USER_ADD_SUCCESS_CODE,
+              message: MESSAGE.USER_ADD_SUCCESS_MESSAGE,
             });
           })
-          .catch(error => {
-            next(error);
+          .catch(err => {
+            console.error(err);
+            if (err.errors[0].type === 'unique violation' && err.errors[0].path === 'user') {
+              err.code = MESSAGE.USER_ADD_USER_EXIST_CODE;
+              err.message = MESSAGE.USER_ADD_USER_EXIST_MESSAGE;
+              return next(err);
+            }
+            err.code = MESSAGE.USER_ADD_FAILURE_CODE;
+            err.message = MESSAGE.USER_ADD_FAILURE_MESSAGE;
+            return next(err);
           });
       });
     });

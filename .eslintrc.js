@@ -13,7 +13,7 @@ module.exports = {
     "sourceType": "module"
   },
   "rules": {
-    "eqeqeq": ["error", "allow-null"],
+    "eqeqeq": ["warn", "allow-null"],
     "indent": ["warn", 2],
     "no-console": "off",
     "no-unused-vars": ["warn"],

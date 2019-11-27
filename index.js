@@ -30,7 +30,7 @@ app.use('/question', question);
 // Client Error Handler
 app.use((err, req, res, next) => {
   if (req.xhr) {
-    res.status(500).send({ error: '服务器异常' });
+    res.status(500).send({ err: '服务器异常' });
   } else {
     next(err);
   }

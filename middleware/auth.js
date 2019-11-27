@@ -2,14 +2,19 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const NODE_ENV = process.env.NODE_ENV;
+const MESSAGE = require('../MESSAGE.json');
+
 const auth = (req, res, next) => {
   if (NODE_ENV && NODE_ENV.trim() === 'test') {
     return next();
   }
   let token = req.headers["authorization"];
   if (!token) {
-    console.log('未登录，无法检测到token');
-    return res.status(401).send("未登录");
+    console.log(MESSAGE.AUTH_NO_TOKEN_MESSAGE);
+    return res.status(401).send({
+      code: MESSAGE.AUTH_NO_TOKEN_CODE,
+      message: MESSAGE.AUTH_NO_TOKEN_MESSAGE,
+    });
   }
   try {
     // remove 'Bearer ' from string;
@@ -19,7 +24,10 @@ const auth = (req, res, next) => {
     next();
   } catch (err) {
     console.log(err);
-    return res.status(400).send("token无效");
+    return res.status(400).send({
+      code: MESSAGE.AUTH_INVALID_TOKEN_CODE,
+      message: MESSAGE.AUTH_INVALID_TOKEN_MESSAGE,
+    });
   }
 };
 

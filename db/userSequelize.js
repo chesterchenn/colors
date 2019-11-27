@@ -28,6 +28,10 @@ User.init({
     field: 'created_at',
   }
 }, {
+  indexes: [{
+    unique: true,
+    fields: ['user']
+  }],
   tableName: 'user',
   sequelize,
 });
