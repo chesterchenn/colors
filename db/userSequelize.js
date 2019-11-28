@@ -20,7 +20,7 @@ User.init({
   role: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 2,
+    defaultValue: 1,
   },
   createdAt: {
     type: Sequelize.DATE,

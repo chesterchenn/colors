@@ -88,4 +88,83 @@ router.route('/')
     });
   });
 
+router.route('/:id')
+  .put((req, res, next) => {
+    const body = req.body;
+    const id = req.params.id;
+    if (!body.user) {
+      const err = new Error(MESSAGE.USER_UPDATE_USER_MESSAGE);
+      err.code = MESSAGE.USER_UPDATE_USER_CODE;
+      console.error(err);
+      return next(err);
+    }
+    if (!body.oldPassword) {
+      const err = new Error(MESSAGE.USER_UPDATE_OLD_PASSWD_MESSAGE);
+      err.code = MESSAGE.USER_UPDATE_OLD_PASSWD_CODE;
+      console.error(err);
+      return next(err);
+    }
+    if (!body.password) {
+      const err = new Error(MESSAGE.USER_UPDATE_NEW_PASSWD_MESSAGE);
+      err.code = MESSAGE.USER_UPDATE_NEW_PASSWD_CODE;
+      console.error(err);
+      return next(err);
+    }
+    if (body.password.length < 6) {
+      const err = new Error(MESSAGE.USER_UPDATE_NEW_PASSWD_LENGTH_MESSAGE);
+      err.code = MESSAGE.USER_UPDATE_NEW_PASSWD_LENGTH_CODE;
+      console.error(err);
+      return next(err);
+    }
+    if (body.password !== body.confirmPassword) {
+      const err = new Error(MESSAGE.USER_UPDATE_NEW_PASSWD_DIFF_MESSAGE);
+      err.code = MESSAGE.USER_UPDATE_NEW_PASSWD_DIFF_CODE;
+      console.error(err);
+      return next(err);
+    }
+    User.findByPk(id).then(task => {
+      if (!task) {
+        const err = new Error(MESSAGE.USER_UPDATE_USER_NO_EXIST_MESSAGE);
+        err.code = MESSAGE.USER_UPDATE_USER_NO_EXIST_CODE;
+        console.error(err);
+        return next(err);
+      }
+      bcrypt.compare(body.oldPassword, task.password, (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        if (result) {
+          bcrypt.hash(body.password, saltRounds, function(err, hash) {
+            User.update({
+              password: hash,
+            }, {
+              where: {
+                user: body.user,
+              }
+            })
+              .then(() => {
+                res.status(200).send({
+                  code: MESSAGE.USER_UPDATE_SUCCESS_CODE,
+                  message: MESSAGE.USER_UPDATE_SUCCESS_MESSAGE,
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                err.message = MESSAGE.USER_UPDATE_FAILURE_MESSAGE;
+                err.code = USER_UPDATE_FAILURE_CODE;
+                return next(err);
+              });
+          });
+        }
+        if (!result) {
+          const err = new Error(MESSAGE.USER_UPDATE_OLD_PASSWD_COMPARE_MESSAGE);
+          err.code = MESSAGE.USER_UPDATE_OLD_PASSWD_COMPARE_CODE;
+          console.log(err);
+          return next(err);
+        }
+      });
+    });
+  });
+
 module.exports = router;

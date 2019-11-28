@@ -41,9 +41,9 @@ router.route('/')
           const err = new Error(MESSAGE.LOGIN_READ_FAILURE_MESSAGE);
           err.code = MESSAGE.LOGIN_READ_FAILURE_CODE;
           console.log(err);
-          return next(err)
+          return next(err);
         }
-      })
+      });
     }).catch(err => {
       console.log(err);
       err.code = MESSAGE.LOGIN_READ_FAILURE_CODE;
