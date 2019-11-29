@@ -167,6 +167,31 @@ router.route('/:id')
         }
       });
     });
+  })
+  .delete((req, res, next) => {
+    const id = req.params.id;
+    User.findByPk(id).then(result => {
+      if (!result) {
+        const err = new Error(MESSAGE.USER_DELETE_ID_MESSAGE);
+        err.code = MESSAGE.USER_DELETE_ID_CODE;
+        return next(err);
+      }
+      User.destroy({
+        where: { id, }
+      })
+        .then(() => {
+          res.status(200).send({
+            message: MESSAGE.USER_DELETE_SUCCESS_MESSAGE,
+            code: MESSAGE.USER_DELETE_SUCCESS_CODE,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          err.code = MESSAGE.USER_DELETE_FAILURE_CODE;
+          err.message = MESSAGE.USER_DELETE_FAILURE_MESSAGE;
+          return next(err);
+        });
+    });
   });
 
 module.exports = router;
