@@ -5,10 +5,12 @@ const User = require('../db/userSequelize');
 const MESSAGE = require('../MESSAGE.json');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const checkRole = require('../middleware/checkRole');
 const saltRounds = 10;
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use('/', checkRole);
 
 router.route('/')
   .get((req, res, next) => {
