@@ -2,27 +2,26 @@ const request = require('supertest');
 const app = require('../../index');
 const expect = require('chai').expect;
 const MESSAGE = require('../../MESSAGE.json');
-const colorInstance = require('../instance').color;
-const categoryInstance = require('../instance').category;
+const instance = require('../instance');
 const api = '/colors';
 const categoryAPI = '/category';
 
-describe('Colors API test case: ', function() {
-  let categoryId, colorInstanceId;
+describe('COLORS API TEST', function() {
+  let categoryId, colorId;
   /* Create a category to use test */
   before(function() {
     request(app)
       .post(categoryAPI)
       .send({
-        name: categoryInstance.name,
-        cname: categoryInstance.cname,
+        name: instance.name,
+        cname: instance.cname,
       })
       .then(function(res) {
         categoryId = res.body.list[0].id;
       });
   });
 
-  describe('Get Colors', function() {
+  describe('Read Colors', function() {
     it('should get colors list', function(done) {
       request(app)
         .get(api)
@@ -36,13 +35,13 @@ describe('Colors API test case: ', function() {
     });
   });
 
-  describe('Post Colors', function() {
+  describe('Create Colors', function() {
     it('should create colors failure when missing name', function(done) {
       request(app)
         .post(api)
         .send({
-          hex: colorInstance.hex,
-          cname: colorInstance.cname,
+          hex: instance.hex,
+          cname: instance.cname,
           categoryId: categoryId,
         })
         .expect(400)
@@ -58,8 +57,8 @@ describe('Colors API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          hex: colorInstance.hex,
-          name: colorInstance.name,
+          hex: instance.hex,
+          name: instance.name,
           categoryId: categoryId,
         })
         .expect(400)
@@ -75,8 +74,8 @@ describe('Colors API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          name: colorInstance.name,
-          cname: colorInstance.cname,
+          name: instance.name,
+          cname: instance.cname,
           categoryId: categoryId,
         })
         .expect(400)
@@ -92,9 +91,9 @@ describe('Colors API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          hex: colorInstance.hex,
-          name: colorInstance.name,
-          cname: colorInstance.cname,
+          hex: instance.hex,
+          name: instance.name,
+          cname: instance.cname,
         })
         .expect(400)
         .then(function(res) {
@@ -109,19 +108,19 @@ describe('Colors API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          hex: colorInstance.hex,
-          name: colorInstance.name,
-          cname: colorInstance.cname,
+          hex: instance.hex,
+          name: instance.name,
+          cname: instance.cname,
           categoryId: categoryId,
         })
         .expect(200)
         .then(function(res) {
-          colorInstanceId = res.body.list[0].id;
+          colorId = res.body.list[0].id;
           expect(res.body.code).eq(MESSAGE.COLORS_ADD_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.COLORS_ADD_SUCCESS_MESSAGE);
-          expect(res.body.list[0].hex).to.equal(colorInstance.hex);
-          expect(res.body.list[0].name).to.equal(colorInstance.name);
-          expect(res.body.list[0].cname).to.equal(colorInstance.cname);
+          expect(res.body.list[0].hex).to.equal(instance.hex);
+          expect(res.body.list[0].name).to.equal(instance.name);
+          expect(res.body.list[0].cname).to.equal(instance.cname);
           expect(res.body.list[0].categoryId).to.equal(categoryId);
           done();
         })
@@ -132,9 +131,9 @@ describe('Colors API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          hex: colorInstance.hex,
-          name: colorInstance.name,
-          cname: colorInstance.cname,
+          hex: instance.hex,
+          name: instance.name,
+          cname: instance.cname,
           categoryId: categoryId,
         })
         .expect(400)
@@ -147,14 +146,14 @@ describe('Colors API test case: ', function() {
     });
   });
 
-  describe('Put Colors', function() {
+  describe('Update Colors', function() {
     it(`should update colors failure when id isn't exist`, function(done) {
       request(app)
-        .put(api + '/' + colorInstance.nonExistId)
+        .put(api + '/' + instance.nonExistId)
         .send({
-          hex: colorInstance.updateHex,
-          name: colorInstance.updateName,
-          cname: colorInstance.updateCname,
+          hex: instance.updateHex,
+          name: instance.updateName,
+          cname: instance.updateCname,
           categoryId: categoryId,
         })
         .expect(400)
@@ -168,10 +167,10 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing hex`, function(done) {
       request(app)
-        .put(api + '/' + colorInstanceId)
+        .put(api + '/' + colorId)
         .send({
-          name: colorInstance.updateName,
-          cname: colorInstance.updateCname,
+          name: instance.updateName,
+          cname: instance.updateCname,
           categoryId: categoryId,
         })
         .expect(400)
@@ -185,10 +184,10 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing name`, function(done) {
       request(app)
-        .put(api + '/' + colorInstanceId)
+        .put(api + '/' + colorId)
         .send({
-          hex: colorInstance.updateHex,
-          cname: colorInstance.updateCname,
+          hex: instance.updateHex,
+          cname: instance.updateCname,
           categoryId: categoryId,
         })
         .expect(400)
@@ -202,10 +201,10 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing cname`, function(done) {
       request(app)
-        .put(api + '/' + colorInstanceId)
+        .put(api + '/' + colorId)
         .send({
-          hex: colorInstance.updateHex,
-          name: colorInstance.updateName,
+          hex: instance.updateHex,
+          name: instance.updateName,
           categoryId: categoryId,
         })
         .expect(400)
@@ -219,11 +218,11 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors failure when missing category`, function(done) {
       request(app)
-        .put(api + '/' + colorInstanceId)
+        .put(api + '/' + colorId)
         .send({
-          hex: colorInstance.updateHex,
-          name: colorInstance.updateName,
-          cname: colorInstance.updateCname,
+          hex: instance.updateHex,
+          name: instance.updateName,
+          cname: instance.updateCname,
         })
         .expect(400)
         .then(function(res) {
@@ -236,21 +235,21 @@ describe('Colors API test case: ', function() {
 
     it(`should update colors success`, function(done) {
       request(app)
-        .put(api + '/' + colorInstanceId)
+        .put(api + '/' + colorId)
         .send({
-          hex: colorInstance.updateHex,
-          name: colorInstance.updateName,
-          cname: colorInstance.updateCname,
+          hex: instance.updateHex,
+          name: instance.updateName,
+          cname: instance.updateCname,
           categoryId: categoryId,
         })
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.COLORS_UPDATE_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.COLORS_UPDATE_SUCCESS_MESSAGE);
-          expect(res.body.list[0].id).to.equal(colorInstanceId);
-          expect(res.body.list[0].hex).to.equal(colorInstance.updateHex);
-          expect(res.body.list[0].name).to.equal(colorInstance.updateName);
-          expect(res.body.list[0].cname).to.equal(colorInstance.updateCname);
+          expect(res.body.list[0].id).to.equal(colorId);
+          expect(res.body.list[0].hex).to.equal(instance.updateHex);
+          expect(res.body.list[0].name).to.equal(instance.updateName);
+          expect(res.body.list[0].cname).to.equal(instance.updateCname);
           expect(res.body.list[0].categoryId).to.equal(categoryId);
           done();
         })
@@ -258,10 +257,10 @@ describe('Colors API test case: ', function() {
     });
   });
 
-  describe('Remove Colors', function() {
+  describe('Delete Colors', function() {
     it(`should delete colors failure when id isn't exist`, function(done) {
       request(app)
-        .delete(api + '/' + colorInstance.nonExistId)
+        .delete(api + '/' + instance.nonExistId)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_ID_CODE);
@@ -273,7 +272,7 @@ describe('Colors API test case: ', function() {
 
     it(`should delete colors success`, function(done) {
       request(app)
-        .delete(api + '/' + colorInstanceId)
+        .delete(api + '/' + colorId)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_SUCCESS_CODE);

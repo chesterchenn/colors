@@ -2,19 +2,18 @@ const request = require('supertest');
 const app = require('../../index');
 const expect = require('chai').expect;
 const MESSAGE = require('../../MESSAGE.json');
-const questionInstance = require('../instance').question;
-const categoryInstance = require('../instance').category;
+const instance = require('../instance');
 const api = '/question';
 const categoryAPI = '/qcategory';
 
-describe('Question API test case: ', function() {
-  let category, questionInstanceId;
+describe('QUESTION API TEST', function() {
+  let category, questionId;
   /* Create a category to use test */
   before(function() {
     request(app)
       .post(categoryAPI)
       .send({
-        name: categoryInstance.name,
+        name: instance.name,
       })
       .then(function(res) {
         category = res.body.list[0].id;
@@ -43,7 +42,7 @@ describe('Question API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          answer: questionInstance.answer,
+          answer: instance.answer,
           category: category,
         })
         .expect(400)
@@ -59,7 +58,7 @@ describe('Question API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          question: questionInstance.question,
+          question: instance.question,
           category: category,
         })
         .expect(400)
@@ -75,8 +74,8 @@ describe('Question API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          question: questionInstance.question,
-          answer: questionInstance.answer,
+          question: instance.question,
+          answer: instance.answer,
         })
         .expect(400)
         .then(function(res) {
@@ -91,17 +90,17 @@ describe('Question API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          question: questionInstance.question,
-          answer: questionInstance.answer,
+          question: instance.question,
+          answer: instance.answer,
           category: category,
         })
         .expect(200)
         .then(function(res) {
-          questionInstanceId = res.body.list[0].id;
+          questionId = res.body.list[0].id;
           expect(res.body.code).eq(MESSAGE.QUESTION_ADD_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.QUESTION_ADD_SUCCESS_MESSAGE);
-          expect(res.body.list[0].question).to.equal(questionInstance.question);
-          expect(res.body.list[0].answer).to.equal(questionInstance.answer);
+          expect(res.body.list[0].question).to.equal(instance.question);
+          expect(res.body.list[0].answer).to.equal(instance.answer);
           expect(res.body.list[0].category).to.equal(category);
           done();
         })
@@ -112,10 +111,10 @@ describe('Question API test case: ', function() {
   describe('Update Question', function() {
     it(`should update question failure when id isn't exist`, function(done) {
       request(app)
-        .put(api + '/' + questionInstance.nonExistId)
+        .put(api + '/' + instance.nonExistId)
         .send({
-          question: questionInstance.question,
-          answer: questionInstance.answer,
+          question: instance.question,
+          answer: instance.answer,
           category: category,
         })
         .expect(400)
@@ -129,9 +128,9 @@ describe('Question API test case: ', function() {
 
     it(`should update question failure when missing question`, function(done) {
       request(app)
-        .put(api + '/' + questionInstanceId)
+        .put(api + '/' + questionId)
         .send({
-          answer: questionInstance.updateAnswer,
+          answer: instance.updateAnswer,
           category: category,
         })
         .expect(400)
@@ -145,9 +144,9 @@ describe('Question API test case: ', function() {
 
     it(`should update question failure when missing answer`, function(done) {
       request(app)
-        .put(api + '/' + questionInstanceId)
+        .put(api + '/' + questionId)
         .send({
-          question: questionInstance.updateQuestion,
+          question: instance.updateQuestion,
           category: category,
         })
         .expect(400)
@@ -161,10 +160,10 @@ describe('Question API test case: ', function() {
 
     it(`should update question failure when missing category`, function(done) {
       request(app)
-        .put(api + '/' + questionInstanceId)
+        .put(api + '/' + questionId)
         .send({
-          answer: questionInstance.updateAnswer,
-          question: questionInstance.updateQuestion,
+          answer: instance.updateAnswer,
+          question: instance.updateQuestion,
         })
         .expect(400)
         .then(function(res) {
@@ -178,19 +177,19 @@ describe('Question API test case: ', function() {
     it(`should update question success`, function(done) {
       // const data = ;
       request(app)
-        .put(api + '/' + questionInstanceId)
+        .put(api + '/' + questionId)
         .send({
-          question: questionInstance.updateQuestion,
-          answer: questionInstance.updateAnswer,
+          question: instance.updateQuestion,
+          answer: instance.updateAnswer,
           category: category,
         })
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.QUESTION_UPDATE_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.QUESTION_UPDATE_SUCCESS_MESSAGE);
-          expect(res.body.list[0].id).to.equal(questionInstanceId);
-          expect(res.body.list[0].question).to.equal(questionInstance.updateQuestion);
-          expect(res.body.list[0].answer).to.equal(questionInstance.updateAnswer);
+          expect(res.body.list[0].id).to.equal(questionId);
+          expect(res.body.list[0].question).to.equal(instance.updateQuestion);
+          expect(res.body.list[0].answer).to.equal(instance.updateAnswer);
           expect(res.body.list[0].category).to.equal(category);
           done();
         })
@@ -201,7 +200,7 @@ describe('Question API test case: ', function() {
   describe('Remove Question', function() {
     it(`should delete question failure when id isn't exist`, function(done) {
       request(app)
-        .delete(api + '/' + questionInstance.nonExistId)
+        .delete(api + '/' + instance.nonExistId)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.QUESTION_DELETE_ID_CODE);
@@ -213,7 +212,7 @@ describe('Question API test case: ', function() {
 
     it(`should delete question success`, function(done) {
       request(app)
-        .delete(api + '/' + questionInstanceId)
+        .delete(api + '/' + questionId)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.QUESTION_DELETE_SUCCESS_CODE);

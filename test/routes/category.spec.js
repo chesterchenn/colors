@@ -5,10 +5,10 @@ const instance = require('../instance');
 const MESSAGE = require('../../MESSAGE.json');
 const api = '/category';
 
-describe('Category API test case: ', function() {
+describe('CATEGORY API TEST', function() {
   let instanceId = '';
 
-  describe('Get category', function() {
+  describe('Read category list', function() {
     it('should read category', function(done) {
       request(app)
         .get(api)
@@ -23,12 +23,12 @@ describe('Category API test case: ', function() {
     });
   });
 
-  describe('Post category', function() {
+  describe('Create category', function() {
     it('should create category failure when missing name', function(done) {
       request(app)
         .post(api)
         .send({
-          cname: instance.category.cname,
+          cname: instance.cname,
         })
         .expect(400)
         .then(function(res) {
@@ -43,7 +43,7 @@ describe('Category API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          name: instance.category.name,
+          name: instance.name,
         })
         .expect(400)
         .then(function(res) {
@@ -58,8 +58,8 @@ describe('Category API test case: ', function() {
       request(app)
         .post(api)
         .send({
-          name: instance.category.name,
-          cname: instance.category.cname,
+          name: instance.name,
+          cname: instance.cname,
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -68,21 +68,21 @@ describe('Category API test case: ', function() {
           instanceId = res.body.list[0].id;
           expect(res.body.code).eq(MESSAGE.CATEGORY_ADD_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.CATEGORY_ADD_SUCCESS_MESSAGE);
-          expect(res.body.list[0].name).to.equal(instance.category.name);
-          expect(res.body.list[0].cname).to.equal(instance.category.cname);
+          expect(res.body.list[0].name).to.equal(instance.name);
+          expect(res.body.list[0].cname).to.equal(instance.cname);
           done();
         })
         .catch(done);
     });
   });
 
-  describe('Put Category', function() {
+  describe('Update Category', function() {
     it(`should update category failure when id isn't exist`, function(done) {
       request(app)
-        .put(api + '/' + instance.category.nonExistId)
+        .put(api + '/' + instance.nonExistId)
         .send({
-          name: instance.category.updateName,
-          cname: instance.category.updateCname,
+          name: instance.updateName,
+          cname: instance.updateCname,
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -99,7 +99,7 @@ describe('Category API test case: ', function() {
       request(app)
         .put(api + '/' + instanceId)
         .send({
-          cname: instance.category.updateCname,
+          cname: instance.updateCname,
         })
         .expect('Content-Type', /json/)
         .expect(400)
@@ -115,7 +115,7 @@ describe('Category API test case: ', function() {
       request(app)
         .put(api + '/' + instanceId)
         .send({
-          name: instance.category.updateName,
+          name: instance.updateName,
         })
         .expect('Content-Type', /json/)
         .expect(400)
@@ -131,8 +131,8 @@ describe('Category API test case: ', function() {
       request(app)
         .put(api + '/' + instanceId)
         .send({
-          name: instance.category.updateName,
-          cname: instance.category.updateCname,
+          name: instance.updateName,
+          cname: instance.updateCname,
         })
         .expect('Content-Type', /json/)
         .expect(200)
@@ -140,18 +140,18 @@ describe('Category API test case: ', function() {
           expect(res.body.code).eq(MESSAGE.CATEGORY_UPDATE_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.CATEGORY_UPDATE_SUCCESS_MESSAGE);
           expect(res.body.list[0].id).to.equal(instanceId);
-          expect(res.body.list[0].name).to.equal(instance.category.updateName);
-          expect(res.body.list[0].cname).to.equal(instance.category.updateCname);
+          expect(res.body.list[0].name).to.equal(instance.updateName);
+          expect(res.body.list[0].cname).to.equal(instance.updateCname);
           done();
         })
         .catch(done);
     });
   });
 
-  describe('Remove Category', function() {
+  describe('Delete Category', function() {
     it(`should delete category failure when id isn't exist`, function(done) {
       request(app)
-        .delete(api + '/' + instance.category.nonExistId)
+        .delete(api + '/' + instance.nonExistId)
         .expect(400)
         .then(function(res) {
           expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);

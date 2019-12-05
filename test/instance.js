@@ -1,25 +1,13 @@
-exports.category = {
-  name: 'TestCategory',
-  cname: '测试分类',
-  updateName: 'updateCategory',
-  updateCname: '更新测试分类',
-  nonExistId: -11111,
-};
-
-exports.color = {
-  hex: '#LLLLLL',
-  name: 'TestColor',
-  cname: '测试颜色',
-  updateHex: '#HHHHHH',
-  updateName: 'UpdateColor',
-  updateCname: '更新测试颜色',
-  nonExistId: -22222,
-};
-
-exports.question = {
-  question: 'Hello World?',
-  answer: 'Hello World!',
-  updateQuestion: '你好？',
-  updateAnswer: '你好!',
-  nonExistId: -33333,
+module.exports = {
+  answer: 'This is a Answer!',
+  cname: '测试名称',
+  hex: '#000000',
+  name: 'Test Name',
+  nonExistId: -1111,
+  question: 'This is a problem?',
+  updateAnswer: '这是一个回答!',
+  updateCname: '更新名称',
+  updateHex: '#FFFFFF',
+  updateQuestion: '这是一个问题？',
+  updateName: 'Update Name',
 };
