@@ -9,7 +9,7 @@
     "start": "nodemon --exec babel-node -- index",
     "test": "set NODE_ENV=test && npx mocha test/routes/*.spec.js",
     "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha test/routes/*.spec.js",
-    "test:user": "set NODE_ENV=test && npx mocha test/routes/user.spec.js"
+    "test:login": "set NODE_ENV=test && npx mocha test/routes/login.spec.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",

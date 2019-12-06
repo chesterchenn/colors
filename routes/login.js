@@ -13,16 +13,17 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.route('/')
   .post((req, res, next) => {
-    const body = req.body;
+    const user = req.body.user;
+    const password = req.body.password;
     User.findOne({
       raw: true,
-      where: {
-        user: body.user,
-      }
+      where: { user, }
     }).then(task => {
-      bcrypt.compare(body.password, task.password, (err, result) => {
+      bcrypt.compare(password, task.password, (err, result) => {
         if (err) {
           console.error(err);
+          err.message = MESSAGE.LOGIN_READ_FAILURE_MESSAGE;
+          err.code = MESSAGE.LOGIN_READ_FAILURE_CODE;
           return next(err);
         }
         if (result) {
@@ -32,6 +33,8 @@ router.route('/')
             role: task.role,
           }, config.privateKey);
           res.status(200).send({
+            code: MESSAGE.LOGIN_READ_SUCCESS_CODE,
+            message: MESSAGE.LOGIN_READ_SUCCESS_MESSAGE,
             user: task.user,
             role: task.role,
             token,

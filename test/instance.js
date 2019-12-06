@@ -2,7 +2,7 @@ module.exports = {
   answer: 'This is a Answer!',
   cname: '测试名称',
   hex: '#000000',
-  name: 'Test Name',
+  name: 'testName',
   nonExistId: -1111,
   password: 'password',
   question: 'This is a problem?',

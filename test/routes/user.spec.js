@@ -247,4 +247,7 @@ describe('USER API TEST', function() {
     });
   });
 
+  after(function() {
+    sinon.restore();
+  })
 });
