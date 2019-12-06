@@ -23,7 +23,7 @@ const auth = (req, res, next) => {
     req.user = decode;
     next();
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(400).send({
       code: MESSAGE.AUTH_INVALID_TOKEN_CODE,
       message: MESSAGE.AUTH_INVALID_TOKEN_MESSAGE,

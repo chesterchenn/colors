@@ -27,7 +27,7 @@ router.route('/')
         list: result.rows,
       });
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       err.code = MESSAGE.QCATEGORY_READ_FAILURE_CODE;
       err.message = MESSAGE.QCATEGORY_READ_FAILURE_CODE;
       return next(err);
@@ -56,7 +56,7 @@ router.route('/')
         });
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         err.code = MESSAGE.QCATEGORY_ADD_FAILURE_CODE;
         err.message = MESSAGE.QCATEGORY_ADD_FAILURE_MESSAGE;
         return next(err);
@@ -95,14 +95,14 @@ router.route('/:id')
           });
         }))
         .catch(err => {
-          console.log(err);
+          console.error(err);
           err.code = MESSAGE.QCATEGORY_UPDATE_FAILURE_CODE;
           err.message = MESSAGE.QCATEGORY_UPDATE_FAILURE_MESSAGE;
           return next(err);
         });
     })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         next(err);
       });
   })
@@ -125,7 +125,7 @@ router.route('/:id')
           });
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
           err.code = MESSAGE.QCATEGORY_DELETE_FAILURE_CODE;
           err.message = MESSAGE.QCATEGORY_DELETE_FAILURE_MESSAGE;
           return next(err);

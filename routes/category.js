@@ -28,7 +28,7 @@ router.route('/')
         list: result.rows,
       });
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       err.code = MESSAGE.CATEGORY_READ_FAILURE_CODE;
       err.message = MESSAGE.CATEGORY_READ_FAILURE_CODE;
       return next(err);
@@ -63,7 +63,7 @@ router.route('/')
         });
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         err.code = MESSAGE.CATEGORY_ADD_FAILURE_CODE;
         err.message = MESSAGE.CATEGORY_ADD_FAILURE_MESSAGE;
         return next(err);
@@ -108,14 +108,14 @@ router.route('/:id')
           });
         }))
         .catch(err => {
-          console.log(err);
+          console.error(err);
           err.code = MESSAGE.CATEGORY_UPDATE_FAILURE_CODE;
           err.message = MESSAGE.CATEGORY_UPDATE_FAILURE_MESSAGE;
           return next(err);
         });
     })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         next(err);
       });
   })
@@ -138,7 +138,7 @@ router.route('/:id')
           });
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
           err.code = MESSAGE.CATEGORY_DELETE_FAILURE_CODE;
           err.message = MESSAGE.CATEGORY_DELETE_FAILURE_MESSAGE;
           return next(err);

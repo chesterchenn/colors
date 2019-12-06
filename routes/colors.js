@@ -27,7 +27,7 @@ router.route('/')
         list: task.rows,
       });
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       err.code = MESSAGE.COLORS_READ_FAILURE_CODE;
       err.message = MESSAGE.COLORS_READ_FAILURE_MESSAGE;
       return next(err);
@@ -81,7 +81,7 @@ router.route('/')
           return next(err);
         });
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       err.code = MESSAGE.COLORS_ADD_FAILURE_CODE;
       err.message = MESSAGE.COLORS_ADD_FAILURE_MESSAGE;
     });
@@ -140,7 +140,7 @@ router.route('/:id')
             });
           }))
           .catch(err => {
-            console.log(err);
+            console.error(err);
             if (err.errors[0].type === 'unique violation') {
               err.message = MESSAGE.COLORS_ADD_HEX_MESSAGE;
               err.code = MESSAGE.COLORS_ADD_HEX_CODE;
@@ -150,7 +150,7 @@ router.route('/:id')
       });
     })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         err.code = MESSAGE.COLORS_UPDATE_FAILURE_CODE;
         err.message = MESSAGE.COLORS_UPDATE_FAILURE_MESSAGE;
         return next(err);
@@ -175,7 +175,7 @@ router.route('/:id')
           });
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
           err.code = MESSAGE.COLORS_DELETE_FAILURE_CODE;
           err.message = MESSAGE.COLORS_DELETE_FAILURE_MESSAGE;
           return next(err);

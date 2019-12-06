@@ -3,11 +3,17 @@ const app = require('../../index');
 const expect = require('chai').expect;
 const instance = require('../instance');
 const MESSAGE = require('../../MESSAGE.json');
+const Category = require('../../db/categorySequelize');
 const api = '/category';
 
 describe('CATEGORY API TEST', function() {
-  let instanceId = '';
+  before(function() {
+    Category.destroy({
+      where: {},
+    });
+  });
 
+  let instanceId = '';
   describe('Read category list', function() {
     it('should read category', function(done) {
       request(app)
@@ -148,7 +154,7 @@ describe('CATEGORY API TEST', function() {
     });
   });
 
-  describe('Delete Category', function() {
+  describe('Remove Category', function() {
     it(`should delete category failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)

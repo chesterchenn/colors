@@ -3,11 +3,17 @@ const app = require('../../index');
 const expect = require('chai').expect;
 const instance = require('../instance');
 const MESSAGE = require('../../MESSAGE.json');
+const Qcategory = require('../../db/Qcategory');
 const api = '/qcategory';
 
 describe('QUESTION CATEGORY API TEST ', function() {
-  let instanceId = '';
+  before(function() {
+    Qcategory.destroy({
+      where: {},
+    });
+  });
 
+  let instanceId = '';
   describe('Read question category', function() {
     it('should read question category', function(done) {
       request(app)
@@ -99,7 +105,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     });
   });
 
-  describe('Delete Category', function() {
+  describe('Remove Category', function() {
     it(`should delete question category failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)

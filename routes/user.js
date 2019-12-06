@@ -69,10 +69,16 @@ router.route('/')
           password: hash,
           role: role,
         })
-          .then(() => {
+          .then(task => {
+            const plainTask = task.get({
+              plain: true,
+            });
+            // eslint-disable-next-line
+            const { password, ...result } = plainTask;
             res.status(200).send({
               code: MESSAGE.USER_ADD_SUCCESS_CODE,
               message: MESSAGE.USER_ADD_SUCCESS_MESSAGE,
+              list: [result],
             });
           })
           .catch(err => {
@@ -94,12 +100,6 @@ router.route('/:id')
   .put((req, res, next) => {
     const body = req.body;
     const id = req.params.id;
-    if (!body.user) {
-      const err = new Error(MESSAGE.USER_UPDATE_USER_MESSAGE);
-      err.code = MESSAGE.USER_UPDATE_USER_CODE;
-      console.error(err);
-      return next(err);
-    }
     if (!body.oldPassword) {
       const err = new Error(MESSAGE.USER_UPDATE_OLD_PASSWD_MESSAGE);
       err.code = MESSAGE.USER_UPDATE_OLD_PASSWD_CODE;
@@ -133,18 +133,12 @@ router.route('/:id')
       }
       bcrypt.compare(body.oldPassword, task.password, (err, result) => {
         if (err) {
-          console.log(err);
+          console.error(err);
           return next(err);
         }
         if (result) {
           bcrypt.hash(body.password, saltRounds, function(err, hash) {
-            User.update({
-              password: hash,
-            }, {
-              where: {
-                user: body.user,
-              }
-            })
+            User.update({ password: hash, }, { where: { id, }})
               .then(() => {
                 res.status(200).send({
                   code: MESSAGE.USER_UPDATE_SUCCESS_CODE,
@@ -152,9 +146,9 @@ router.route('/:id')
                 });
               })
               .catch(err => {
-                console.log(err);
+                console.error(err);
                 err.message = MESSAGE.USER_UPDATE_FAILURE_MESSAGE;
-                err.code = USER_UPDATE_FAILURE_CODE;
+                err.code = MESSAGE.USER_UPDATE_FAILURE_CODE;
                 return next(err);
               });
           });
@@ -162,7 +156,7 @@ router.route('/:id')
         if (!result) {
           const err = new Error(MESSAGE.USER_UPDATE_OLD_PASSWD_COMPARE_MESSAGE);
           err.code = MESSAGE.USER_UPDATE_OLD_PASSWD_COMPARE_CODE;
-          console.log(err);
+          console.error(err);
           return next(err);
         }
       });
@@ -186,7 +180,7 @@ router.route('/:id')
           });
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
           err.code = MESSAGE.USER_DELETE_FAILURE_CODE;
           err.message = MESSAGE.USER_DELETE_FAILURE_MESSAGE;
           return next(err);

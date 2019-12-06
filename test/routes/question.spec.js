@@ -3,10 +3,21 @@ const app = require('../../index');
 const expect = require('chai').expect;
 const MESSAGE = require('../../MESSAGE.json');
 const instance = require('../instance');
+const Question = require('../../db/question');
+const Qcategory = require('../../db/Qcategory');
 const api = '/question';
 const categoryAPI = '/qcategory';
 
 describe('QUESTION API TEST', function() {
+  before(function() {
+    Question.destroy({
+      where: {},
+    });
+    Qcategory.destroy({
+      where: {},
+    });
+  });
+
   let category, questionId;
   /* Create a category to use test */
   before(function() {
@@ -19,7 +30,7 @@ describe('QUESTION API TEST', function() {
         category = res.body.list[0].id;
       }).
       catch(err => {
-        console.log(err);
+        console.error(err);
       });
   });
 

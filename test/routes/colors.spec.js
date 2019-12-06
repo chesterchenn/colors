@@ -3,10 +3,21 @@ const app = require('../../index');
 const expect = require('chai').expect;
 const MESSAGE = require('../../MESSAGE.json');
 const instance = require('../instance');
+const Category = require('../../db/categorySequelize');
+const Colors = require('../../db/colorsSequelize');
 const api = '/colors';
 const categoryAPI = '/category';
 
 describe('COLORS API TEST', function() {
+  before(function() {
+    Category.destroy({
+      where: {},
+    });
+    Colors.destroy({
+      where: {},
+    });
+  });
+
   let categoryId, colorId;
   /* Create a category to use test */
   before(function() {
@@ -257,7 +268,7 @@ describe('COLORS API TEST', function() {
     });
   });
 
-  describe('Delete Colors', function() {
+  describe('Remove Colors', function() {
     it(`should delete colors failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)

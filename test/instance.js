@@ -4,10 +4,13 @@ module.exports = {
   hex: '#000000',
   name: 'Test Name',
   nonExistId: -1111,
+  password: 'password',
   question: 'This is a problem?',
+  shortPasswd: 'pass',
   updateAnswer: '这是一个回答!',
   updateCname: '更新名称',
   updateHex: '#FFFFFF',
+  updatePassword: 'updatePd',
   updateQuestion: '这是一个问题？',
   updateName: 'Update Name',
 };
