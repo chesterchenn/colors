@@ -23,6 +23,7 @@ describe('QUESTION API TEST', function() {
   before(function() {
     request(app)
       .post(categoryAPI)
+      .set('authorization', 'Bearer ' + instance.token)
       .send({
         name: instance.name,
       })
@@ -38,6 +39,7 @@ describe('QUESTION API TEST', function() {
     it('should read question list', function(done) {
       request(app)
         .get(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.QUESTION_READ_SUCCESS_CODE);
@@ -52,6 +54,7 @@ describe('QUESTION API TEST', function() {
     it('should create question failure when missing question', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           answer: instance.answer,
           category: category,
@@ -68,6 +71,7 @@ describe('QUESTION API TEST', function() {
     it('should create question failure when missing answer', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           question: instance.question,
           category: category,
@@ -84,6 +88,7 @@ describe('QUESTION API TEST', function() {
     it('should create question failure when missing category', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           question: instance.question,
           answer: instance.answer,
@@ -100,6 +105,7 @@ describe('QUESTION API TEST', function() {
     it('should create question success', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           question: instance.question,
           answer: instance.answer,
@@ -123,6 +129,7 @@ describe('QUESTION API TEST', function() {
     it(`should update question failure when id isn't exist`, function(done) {
       request(app)
         .put(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           question: instance.question,
           answer: instance.answer,
@@ -140,6 +147,7 @@ describe('QUESTION API TEST', function() {
     it(`should update question failure when missing question`, function(done) {
       request(app)
         .put(api + '/' + questionId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           answer: instance.updateAnswer,
           category: category,
@@ -156,6 +164,7 @@ describe('QUESTION API TEST', function() {
     it(`should update question failure when missing answer`, function(done) {
       request(app)
         .put(api + '/' + questionId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           question: instance.updateQuestion,
           category: category,
@@ -172,6 +181,7 @@ describe('QUESTION API TEST', function() {
     it(`should update question failure when missing category`, function(done) {
       request(app)
         .put(api + '/' + questionId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           answer: instance.updateAnswer,
           question: instance.updateQuestion,
@@ -189,6 +199,7 @@ describe('QUESTION API TEST', function() {
       // const data = ;
       request(app)
         .put(api + '/' + questionId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           question: instance.updateQuestion,
           answer: instance.updateAnswer,
@@ -212,6 +223,7 @@ describe('QUESTION API TEST', function() {
     it(`should delete question failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.QUESTION_DELETE_ID_CODE);
@@ -224,6 +236,7 @@ describe('QUESTION API TEST', function() {
     it(`should delete question success`, function(done) {
       request(app)
         .delete(api + '/' + questionId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.QUESTION_DELETE_SUCCESS_CODE);
@@ -238,6 +251,7 @@ describe('QUESTION API TEST', function() {
   after(function(done) {
     request(app)
       .delete(categoryAPI + '/' + category)
+      .set('authorization', 'Bearer ' + instance.token)
       .then(function() {
         done();
       })

@@ -18,6 +18,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it('should read question category', function(done) {
       request(app)
         .get(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.QCATEGORY_READ_SUCCESS_CODE);
@@ -32,6 +33,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it('should create question category failure when missing name', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.QCATEGORY_ADD_NAME_CODE);
@@ -44,6 +46,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it('should create question category success', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.name,
         })
@@ -63,6 +66,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it(`should update question category failure when id isn't exist`, function(done) {
       request(app)
         .put(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.updateName,
         })
@@ -78,6 +82,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it(`should update question category failure when missing name`, function(done) {
       request(app)
         .put(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.QCATEGORY_UPDATE_NAME_CODE);
@@ -90,6 +95,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it(`should update question category success`, function(done) {
       request(app)
         .put(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.updateName,
         })
@@ -109,6 +115,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it(`should delete question category failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(400)
         .then(function(res) {
           expect(res.body.message).to.eq(MESSAGE.QCATEGORY_DELETE_ID_MESSAGE);
@@ -121,6 +128,7 @@ describe('QUESTION CATEGORY API TEST ', function() {
     it('should delete question category success', function(done) {
       request(app)
         .delete(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.message).to.eq(MESSAGE.QCATEGORY_DELETE_SUCCESS_MESSAGE);

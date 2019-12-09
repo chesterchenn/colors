@@ -3,26 +3,12 @@ const app = require('../../index');
 const expect = require('chai').expect;
 const MESSAGE = require('../../MESSAGE.json');
 const instance = require('../instance');
-const User = require('../../db/userSequelize');
 const api = '/login';
 const sinon = require('sinon');
-const userApi = '/user';
 
 describe('LOGIN API TEST', function() {
-  before(function(done) {
+  before(function() {
     sinon.stub(console, "error");
-    User.destroy({
-      where: {},
-    });
-    request(app)
-      .post(userApi)
-      .send({
-        user: instance.name,
-        password: instance.password,
-      })
-      .then(function() {
-        done();
-      })
   });
 
   describe('Login', function() {
@@ -30,7 +16,7 @@ describe('LOGIN API TEST', function() {
       request(app)
         .post(api)
         .send({
-          password: instance.password,
+          password: instance.adminPasswd,
         })
         .expect(400)
         .then(function(res) {
@@ -38,13 +24,13 @@ describe('LOGIN API TEST', function() {
           expect(res.body.message).eq(MESSAGE.LOGIN_READ_FAILURE_MESSAGE);
           done();
         })
-        .catch(done)
+        .catch(done);
     });
     it('should login failure when no password', function(done) {
       request(app)
         .post(api)
         .send({
-          user: instance.name,
+          user: instance.admin,
         })
         .expect(400)
         .then(function(res) {
@@ -52,14 +38,14 @@ describe('LOGIN API TEST', function() {
           expect(res.body.message).eq(MESSAGE.LOGIN_READ_FAILURE_MESSAGE);
           done();
         })
-        .catch(done)
+        .catch(done);
     });
     it('should login failure when password is error', function(done) {
       request(app)
         .post(api)
         .send({
-          user: instance.name,
-          password: instance.updatePassword,
+          user: instance.admin,
+          password: instance.password,
         })
         .expect(400)
         .then(function(res) {
@@ -67,14 +53,14 @@ describe('LOGIN API TEST', function() {
           expect(res.body.message).eq(MESSAGE.LOGIN_READ_FAILURE_MESSAGE);
           done();
         })
-        .catch(done)
+        .catch(done);
     });
     it('should login success', function(done) {
       request(app)
         .post(api)
         .send({
-          user: instance.name,
-          password: instance.password,
+          user: instance.admin,
+          password: instance.adminPasswd,
         })
         .expect(200)
         .then(function(res) {
@@ -85,14 +71,11 @@ describe('LOGIN API TEST', function() {
         .catch(err => {
           console.log(err);
           done(err);
-        })
+        });
     });
-  })
+  });
 
   after(function() {
-    User.destroy({
-      where: {},
-    });
     sinon.restore();
-  })
+  });
 });

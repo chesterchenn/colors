@@ -20,15 +20,17 @@ describe('COLORS API TEST', function() {
 
   let categoryId, colorId;
   /* Create a category to use test */
-  before(function() {
+  before(function(done) {
     request(app)
       .post(categoryAPI)
+      .set('authorization', 'Bearer ' + instance.token)
       .send({
         name: instance.name,
         cname: instance.cname,
       })
       .then(function(res) {
         categoryId = res.body.list[0].id;
+        done();
       });
   });
 
@@ -36,6 +38,7 @@ describe('COLORS API TEST', function() {
     it('should get colors list', function(done) {
       request(app)
         .get(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.COLORS_READ_SUCCESS_CODE);
@@ -50,6 +53,7 @@ describe('COLORS API TEST', function() {
     it('should create colors failure when missing name', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.hex,
           cname: instance.cname,
@@ -67,6 +71,7 @@ describe('COLORS API TEST', function() {
     it('should create colors failure when missing cname', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.hex,
           name: instance.name,
@@ -84,6 +89,7 @@ describe('COLORS API TEST', function() {
     it('should create colors failure when missing hex', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.name,
           cname: instance.cname,
@@ -101,6 +107,7 @@ describe('COLORS API TEST', function() {
     it('should create colors failure when missing category', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.hex,
           name: instance.name,
@@ -118,6 +125,7 @@ describe('COLORS API TEST', function() {
     it('should create colors success', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.hex,
           name: instance.name,
@@ -141,6 +149,7 @@ describe('COLORS API TEST', function() {
     it('should create colors failure when hex is exist', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.hex,
           name: instance.name,
@@ -161,6 +170,7 @@ describe('COLORS API TEST', function() {
     it(`should update colors failure when id isn't exist`, function(done) {
       request(app)
         .put(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.updateHex,
           name: instance.updateName,
@@ -179,6 +189,7 @@ describe('COLORS API TEST', function() {
     it(`should update colors failure when missing hex`, function(done) {
       request(app)
         .put(api + '/' + colorId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.updateName,
           cname: instance.updateCname,
@@ -196,6 +207,7 @@ describe('COLORS API TEST', function() {
     it(`should update colors failure when missing name`, function(done) {
       request(app)
         .put(api + '/' + colorId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.updateHex,
           cname: instance.updateCname,
@@ -213,6 +225,7 @@ describe('COLORS API TEST', function() {
     it(`should update colors failure when missing cname`, function(done) {
       request(app)
         .put(api + '/' + colorId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.updateHex,
           name: instance.updateName,
@@ -230,6 +243,7 @@ describe('COLORS API TEST', function() {
     it(`should update colors failure when missing category`, function(done) {
       request(app)
         .put(api + '/' + colorId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.updateHex,
           name: instance.updateName,
@@ -247,6 +261,7 @@ describe('COLORS API TEST', function() {
     it(`should update colors success`, function(done) {
       request(app)
         .put(api + '/' + colorId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           hex: instance.updateHex,
           name: instance.updateName,
@@ -272,6 +287,7 @@ describe('COLORS API TEST', function() {
     it(`should delete colors failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(400)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_ID_CODE);
@@ -284,6 +300,7 @@ describe('COLORS API TEST', function() {
     it(`should delete colors success`, function(done) {
       request(app)
         .delete(api + '/' + colorId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).to.eq(MESSAGE.COLORS_DELETE_SUCCESS_CODE);
@@ -298,6 +315,7 @@ describe('COLORS API TEST', function() {
   after(function(done) {
     request(app)
       .delete(categoryAPI + '/' + categoryId)
+      .set('authorization', 'Bearer ' + instance.token)
       .then(function() {
         done();
       })

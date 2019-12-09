@@ -1,13 +1,9 @@
 // jwt
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const NODE_ENV = process.env.NODE_ENV;
 const MESSAGE = require('../MESSAGE.json');
 
 const auth = (req, res, next) => {
-  if (NODE_ENV && NODE_ENV === 'test') {
-    return next();
-  }
   let token = req.headers["authorization"];
   if (!token) {
     console.log(MESSAGE.AUTH_NO_TOKEN_MESSAGE);

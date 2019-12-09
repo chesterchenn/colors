@@ -18,7 +18,7 @@ describe('CATEGORY API TEST', function() {
     it('should read category', function(done) {
       request(app)
         .get(api)
-        .expect('Content-Type', /json/)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(200)
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.CATEGORY_READ_SUCCESS_CODE);
@@ -33,6 +33,7 @@ describe('CATEGORY API TEST', function() {
     it('should create category failure when missing name', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           cname: instance.cname,
         })
@@ -48,6 +49,7 @@ describe('CATEGORY API TEST', function() {
     it('should create category failure when missing cname', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.name,
         })
@@ -63,6 +65,7 @@ describe('CATEGORY API TEST', function() {
     it('should create category success', function(done) {
       request(app)
         .post(api)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.name,
           cname: instance.cname,
@@ -86,6 +89,7 @@ describe('CATEGORY API TEST', function() {
     it(`should update category failure when id isn't exist`, function(done) {
       request(app)
         .put(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.updateName,
           cname: instance.updateCname,
@@ -104,6 +108,7 @@ describe('CATEGORY API TEST', function() {
     it(`should update category failure when missing name`, function(done) {
       request(app)
         .put(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           cname: instance.updateCname,
         })
@@ -120,6 +125,7 @@ describe('CATEGORY API TEST', function() {
     it(`should update category failure when missing cname`, function(done) {
       request(app)
         .put(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.updateName,
         })
@@ -136,6 +142,7 @@ describe('CATEGORY API TEST', function() {
     it(`should update category success`, function(done) {
       request(app)
         .put(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .send({
           name: instance.updateName,
           cname: instance.updateCname,
@@ -158,6 +165,7 @@ describe('CATEGORY API TEST', function() {
     it(`should delete category failure when id isn't exist`, function(done) {
       request(app)
         .delete(api + '/' + instance.nonExistId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect(400)
         .then(function(res) {
           expect(res.body.message).to.eq(MESSAGE.CATEGORY_DELETE_ID_MESSAGE);
@@ -170,6 +178,7 @@ describe('CATEGORY API TEST', function() {
     it('should delete category success', function(done) {
       request(app)
         .delete(api + '/' + instanceId)
+        .set('authorization', 'Bearer ' + instance.token)
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function(res) {

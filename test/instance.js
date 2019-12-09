@@ -13,4 +13,7 @@ module.exports = {
   updatePassword: 'updatePd',
   updateQuestion: '这是一个问题？',
   updateName: 'Update Name',
+  admin: 'admin',
+  adminPasswd: 'admin1234',
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY4LCJ1c2VyIjoiYWRtaW4iLCJyb2xlIjowLCJpYXQiOjE1NzU4ODA3MTR9.u71K9UwUpYnILwqfqspdKjeEPgYxlYpowES2H3xwAu0',
 };

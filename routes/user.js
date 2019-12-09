@@ -40,7 +40,6 @@ router.route('/')
 
   .post((req, res, next) => {
     const body = req.body;
-    const role = req.role;
     if (!body.user) {
       const err = new Error(MESSAGE.USER_ADD_NO_USER_MESSAGE);
       err.code = MESSAGE.USER_ADD_NO_USER_CODE;
@@ -67,7 +66,7 @@ router.route('/')
         User.create({
           user: body.user,
           password: hash,
-          role: role,
+          role: body.role,
         })
           .then(task => {
             const plainTask = task.get({

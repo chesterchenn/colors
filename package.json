@@ -6,10 +6,11 @@
   "scripts": {
     "eslint": "npx eslint routes db middleware test",
     "eslint:fix": "npx eslint routes db middleware test --fix",
-    "start": "nodemon --exec babel-node -- index",
+    "start": "cross-env NODE_ENV=dev nodemon --exec babel-node -- index",
+    "start:test": "cross-env NODE_ENV=test nodemon --exec babel-node -- index",
     "test": "cross-env NODE_ENV=test npx mocha test/routes/*.spec.js",
     "test:cov": "cross-env NODE_ENV=test nyc --reporter=html mocha test/routes/*.spec.js",
-    "test:login": "cross-env NODE_ENV=test npx mocha test/routes/login.spec.js"
+    "test:category": "cross-env NODE_ENV=test npx mocha test/routes/category.spec.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
