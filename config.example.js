@@ -1,6 +1,6 @@
 /* Example */
 const NODE_ENV = process.env.NODE_ENV;
-let db = (NODE_ENV && NODE_ENV.trim() === 'test') ? 'db_test' : 'db';
+let db = (NODE_ENV && NODE_ENV === 'test') ? 'db_test' : 'db';
 
 module.exports = {
   database: db,

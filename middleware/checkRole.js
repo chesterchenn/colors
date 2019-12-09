@@ -4,7 +4,7 @@
 const MESSAGE = require('../MESSAGE');
 const NODE_ENV = process.env.NODE_ENV;
 const checkRole = (req, res, next) => {
-  if (NODE_ENV && NODE_ENV.trim() === 'test') {
+  if (NODE_ENV && NODE_ENV === 'test') {
     return next();
   }
   if (req.user.role !== 0) {

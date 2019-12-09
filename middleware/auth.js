@@ -5,7 +5,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const MESSAGE = require('../MESSAGE.json');
 
 const auth = (req, res, next) => {
-  if (NODE_ENV && NODE_ENV.trim() === 'test') {
+  if (NODE_ENV && NODE_ENV === 'test') {
     return next();
   }
   let token = req.headers["authorization"];
