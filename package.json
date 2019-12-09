@@ -7,9 +7,9 @@
     "eslint": "npx eslint routes db middleware test",
     "eslint:fix": "npx eslint routes db middleware test --fix",
     "start": "nodemon --exec babel-node -- index",
-    "test": "set NODE_ENV=test && npx mocha test/routes/*.spec.js",
-    "test:cov": "set NODE_ENV=test && nyc --reporter=html mocha test/routes/*.spec.js",
-    "test:login": "set NODE_ENV=test && npx mocha test/routes/login.spec.js"
+    "test": "cross-env NODE_ENV=test npx mocha test/routes/*.spec.js",
+    "test:cov": "cross-env NODE_ENV=test nyc --reporter=html mocha test/routes/*.spec.js",
+    "test:login": "cross-env NODE_ENV=test npx mocha test/routes/login.spec.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -26,6 +26,7 @@
     "@babel/node": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "chai": "^4.2.0",
+    "cross-env": "^6.0.3",
     "eslint": "^6.7.2",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.1",
