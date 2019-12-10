@@ -12,7 +12,7 @@ describe('MIDDLEWARE/CHECKROLE TEST CASES', function() {
         res.status = sinon.stub().returns(res);
         res.send = sinon.stub().returns(res);
         return res;
-      }
+      };
       var res = mockResponse();
       checkRole({
         user: { role: 1, }
@@ -23,12 +23,12 @@ describe('MIDDLEWARE/CHECKROLE TEST CASES', function() {
         message: MESSAGE.CHECKROLE_FORBIDDEN_MESSAGE,
       })).to.eq(true);
       expect(spy.calledOnce).to.eq(false);
-    })
+    });
 
     it('should success when the role is admin', function() {
       const spy = sinon.spy();
       checkRole({user: { role: 0, }}, {}, spy);
       expect(spy.calledOnce).to.eq(true);
-    })
+    });
   });
 });

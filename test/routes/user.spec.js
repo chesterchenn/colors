@@ -114,7 +114,6 @@ describe('USER API TEST', function() {
         .then(function(res) {
           expect(res.body.code).eq(MESSAGE.USER_READ_SUCCESS_CODE);
           expect(res.body.message).eq(MESSAGE.USER_READ_SUCCESS_MESSAGE);
-          // expect(res.body.list[0].user).to.equal(instance.name);
           done();
         })
         .catch(done);
