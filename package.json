@@ -1,12 +1,12 @@
 {
   "name": "colors-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "This is colors api",
   "main": "index.js",
   "scripts": {
     "eslint": "npx eslint routes db middleware test",
     "eslint:fix": "npx eslint routes db middleware test --fix",
-    "start": "cross-env NODE_ENV=dev nodemon --exec babel-node -- index",
+    "start": "nodemon --exec babel-node -- index",
     "start:test": "cross-env NODE_ENV=test nodemon --exec babel-node -- index",
     "test": "cross-env NODE_ENV=test npx mocha test/*/*.spec.js",
     "test:cov": "cross-env NODE_ENV=test nyc --reporter=html mocha test/*/*.spec.js",
