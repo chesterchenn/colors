@@ -8,9 +8,10 @@
     "eslint:fix": "npx eslint routes db middleware test --fix",
     "start": "cross-env NODE_ENV=dev nodemon --exec babel-node -- index",
     "start:test": "cross-env NODE_ENV=test nodemon --exec babel-node -- index",
-    "test": "cross-env NODE_ENV=test npx mocha test/routes/*.spec.js",
-    "test:cov": "cross-env NODE_ENV=test nyc --reporter=html mocha test/routes/*.spec.js",
-    "test:category": "cross-env NODE_ENV=test npx mocha test/routes/category.spec.js"
+    "test": "cross-env NODE_ENV=test npx mocha test/*/*.spec.js",
+    "test:cov": "cross-env NODE_ENV=test nyc --reporter=html mocha test/*/*.spec.js",
+    "test:routes": "cross-env NODE_ENV=test npx mocha test/routes/*.spec.js",
+    "test:middleware": "cross-env NODE_ENV=test npx mocha test/middleware/*.spec.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",

@@ -16,4 +16,5 @@ module.exports = {
   admin: 'admin',
   adminPasswd: 'admin1234',
   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY4LCJ1c2VyIjoiYWRtaW4iLCJyb2xlIjowLCJpYXQiOjE1NzU4ODA3MTR9.u71K9UwUpYnILwqfqspdKjeEPgYxlYpowES2H3xwAu0',
+  expiredToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjY4LCJ1c2VyIjoiYWRtaW4iLCJyb2xlIjowLCJpYXQiOjE1NzU5NDQ3MzYsImV4cCI6MTU3NTk0NDc0Nn0.TCpk4HMNExB63ZMPrWl3MNM3lKL2X0DazVs8rWMRG1g',
 };
