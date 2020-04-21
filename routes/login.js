@@ -11,6 +11,23 @@ const bcrypt = require('bcrypt');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+/**
+ * @api {post} /login login
+ * @apiName login
+ * @apiGroup Login
+ *
+ * @apiParam {String} user user name
+ * @apiParam {String} password user password
+ *
+ * @apiSuccess {String} code code of the response.
+ * @apiSuccess {String} message message of the response.
+ * @apiSuccess {String} user user of the user.
+ * @apiSuccess {Number} role role of the user.
+ * @apiSuccess {String} token token of the user.
+ *
+ * @apiError  {String} code code of the Error.
+ * @apiError  {String} message message of the Error.
+ */
 router.route('/')
   .post((req, res, next) => {
     const user = req.body.user;

@@ -4,6 +4,7 @@
   "description": "This is colors api",
   "main": "index.js",
   "scripts": {
+    "doc": "npx apidoc -i routes/ -o doc/",
     "eslint": "npx eslint routes db middleware test",
     "eslint:fix": "npx eslint routes db middleware test --fix",
     "start": "nodemon --exec babel-node -- index",
@@ -27,6 +28,7 @@
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
+    "apidoc": "^0.20.1",
     "chai": "^4.2.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
